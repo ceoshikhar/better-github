@@ -3,11 +3,14 @@
 
   "name": "Better Github",
   "version": "1.0.0",
-  "description": "Customize the font of code on Github",
-
+  "description": "Enhance your code reading experience on GitHub",
   "content_scripts": [{
     "js": ["better-github.js"],
     "matches": ["https://github.com/*"]
-  }]
-
+  }],
+  "permissions": ["storage"],
+  "browser_action": {
+    "default_title": "Better Github",
+    "default_popup": "popup.html"
+  }
 }
