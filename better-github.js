@@ -27,13 +27,20 @@ window.onload = function() {
 
 function changeStyles() {
   const codeElements = document.getElementsByClassName("blob-code-inner");
-  const len = codeElements.length;
+  const codeElementsLen = codeElements.length;
+  const preElements = document.querySelectorAll("pre");
+  const preElementsLen = preElements.length;
 
-  for (let i = 0; i < len; i++) {
-    // TODO: Instead of hard coding the `fontFamily` and `fontSize`, we should
-    // be able to allow the user to choose a font size and font family of their
-    // choice (which they have installed on their machine).
+  // TODO: Instead of hard coding the `fontFamily` and `fontSize`, we should
+  // be able to allow the user to choose a font size and font family of their
+  // choice (which they have installed on their machine).
+  for (let i = 0; i < codeElementsLen; i++) {
     codeElements[i].style.fontFamily = "'Fira Code', 'monospace'";
     codeElements[i].style.fontSize = "14px";
+  }
+
+  for (let i = 0; i < preElementsLen; i++ ){
+    preElements[i].style.fontFamily = "'Fira Code', 'monospace'";
+    preElements[i].style.fontSize = "14px";
   }
 }
