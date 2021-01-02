@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap"
+      rel="stylesheet"
+    >
+    <title>Better Github</title>
+    <style>
+      body {
+        min-width: 220px;
+        padding: 0;
+        margin: 0;
+        border: 2px solid #111;
+      }
+      h2,
+      p,
+      label {
+        font-family: 'Fira Code', monospace;
+        margin: 0;
+        padding: 0;
+        font-size: 0.85rem;
+      }
+      h2 {
+        font-size: 1.15rem;
+        margin: 0.25em 0;
+        text-align: center;
+        color: #047DC4;
+      }
+      p {
+        text-align: center;
+      }
+      label {
+        display: block;
+        text-align: left;
+        font-weight: bold;
+      }
+      form {
+        width: 100%;
+        padding: 1em;
+        padding-top: 0;
+      }
+      form input {
+        font-family: 'Fira Code', monospace;
+        color: #047DC4;
+        font-weight: normal;
+        margin-top: 0.25em;
+        border: none;
+        border-bottom: 1px solid #727272;
+        box-sizing: border-box;
+        padding: 0.25em 0;
+        outline: none;
+      }
+      input::placeholder {
+        color: #047DC4;
+        opacity: 0.69;
+      }
+      button {
+        background: #047DC4;
+        color: #F0F0F0;
+        width: 90%;
+        font-size: 1rem;
+        border: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>Better Github</h2>
+    <p>Enhance your code reading experience on GitHub</p>
+    <br />
+    <form id="form">
+      <div>
+        <label for="font-family">Font Family</label>
+        <input type="text" name="font-family" id="fontFamily" placeholder="Ex: Fira Code">
+      </div>
+      <br />
+      <div>
+        <label for="font-size">Font Size</label>
+        <input type="text" name="font-size" id="fontSize" placeholder="Ex: 14px">
+      </div>
+      <br />
+      <button id="apply" type="submit">Apply</button>
+    </form>
+    <script src="better-github.js"></script>
+  </body>
+</html>
+
