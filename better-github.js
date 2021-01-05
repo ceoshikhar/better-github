@@ -1,4 +1,4 @@
-const DEFAULT_FONT_FAMILY = "'Fira Code', 'monospace'";
+const DEFAULT_FONT_FAMILY = "'SF Mono', 'monospace'";
 const DEFAULT_FONT_SIZE   = "14px";
 
 // TODO: Instead of hard coding the `fontFamily` and `fontSize`, we should
