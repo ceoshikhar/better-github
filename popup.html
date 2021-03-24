@@ -7,6 +7,7 @@
       rel="stylesheet"
     >
     <title>Better Github</title>
+
     <style>
       body {
         min-width: 220px;
@@ -14,6 +15,7 @@
         margin: 0;
         border: 2px solid #111;
       }
+
       h2,
       p,
       label {
@@ -22,25 +24,30 @@
         padding: 0;
         font-size: 0.85rem;
       }
+
       h2 {
         font-size: 1.15rem;
         margin: 0.25em 0;
         text-align: center;
         color: #047DC4;
       }
+
       p {
         text-align: center;
       }
+
       label {
         display: block;
         text-align: left;
         font-weight: bold;
       }
+
       form {
         width: 100%;
         padding: 1em;
         padding-top: 0;
       }
+
       form input {
         font-family: 'Fira Code', monospace;
         color: #047DC4;
@@ -52,17 +59,30 @@
         padding: 0.25em 0;
         outline: none;
       }
+
       input::placeholder {
         color: #047DC4;
         opacity: 0.69;
       }
+
       button {
-        background: #047DC4;
-        color: #F0F0F0;
         width: 90%;
+        padding: 0.5em 0.35em;
         font-size: 1rem;
         border: none;
+        cursor: pointer;
       }
+
+      #apply-button {
+        background: #047DC4;
+        color: #F0F0F0;
+      }
+
+      #reset-button {
+        background: #F0F0F0;
+        color: #111;
+      }
+
     </style>
   </head>
 
@@ -70,6 +90,7 @@
     <h2>Better Github</h2>
     <p>Enhance your code reading experience on GitHub</p>
     <br />
+
     <form id="form">
       <div>
         <label for="font-family">Font Family</label>
@@ -78,12 +99,15 @@
       <br />
       <div>
         <label for="font-size">Font Size</label>
-        <input type="text" name="font-size" id="fontSize" placeholder="Ex: 14px">
+        <input type="number" name="font-size" id="fontSize" placeholder="Ex: 16">
       </div>
       <br />
-      <button id="apply" type="submit">Apply</button>
+      <button id="apply-button" type="submit">Apply</button>
+      <button id="reset-button">Reset</button>
     </form>
-    <script src="better-github.js"></script>
+
+
+    <script src="better-github.js" type="text/javascript"></script>
   </body>
 </html>
 
