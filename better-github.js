@@ -178,18 +178,18 @@ async function applyStyles(fontFamily, fontSize) {
   const preElementsLen          = preElements.length;
 
   for (let i = 0; i < codeTextElementsLen; i++) {
-    codeTextElements[i].style.fontFamily = fontFamily;
-    codeTextElements[i].style.fontSize = fontSize;
+    codeTextElements[i].style.fontFamily  = fontFamily;
+    codeTextElements[i].style.fontSize    = fontSize;
   }
 
   for (let i = 0; i < codeLineNumElementsLen; i++) {
     codeLineNumElements[i].style.fontFamily = fontFamily;
-    codeLineNumElements[i].style.fontSize = fontSize;
+    codeLineNumElements[i].style.fontSize   = fontSize;
   }
 
   for (let i = 0; i < preElementsLen; i++ ){
     preElements[i].style.fontFamily = fontFamily;
-    preElements[i].style.fontSize = fontSize;
+    preElements[i].style.fontSize   = fontSize;
   }
 }
 
