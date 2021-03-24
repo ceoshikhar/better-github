@@ -1,7 +1,7 @@
 // Store the current set font styles to this object so that we
-// have to fetch them from chrome storage API only once. 
+// don't have to fetch them from chrome storage API again.
 // This improves the performance as we don't do the async
-// chrome storage API read calls every new GitHub page.
+// chrome storage API read calls on every new GitHub page.
 const cache = {
   setFontName: null,
   setFontSize: null
