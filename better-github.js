@@ -1,5 +1,5 @@
 const DEFAULT_FONT_FAMILY = "'Hack', 'monospace'";
-const DEFAULT_FONT_SIZE   = "16px";
+const DEFAULT_FONT_SIZE   = "14px";
 
 // TODO: Instead of hard coding the `fontFamily` and `fontSize`, we should
 // be able to allow the user to choose a font size and font family of their
