@@ -39,6 +39,11 @@ async function getCurrentSetFontStyles() {
     return;
   }
 
+  // Update the cache so that we don't make the chrome storage
+  // API calls again to get current set font styles.
+  cache.setFontName = currentSetFontName;
+  cache.setFontSize = currentSetFontSize;
+
   return genFontStyles(currentSetFontName, currentSetFontSize);
 }
 
@@ -50,7 +55,6 @@ function genFontStyles(name, size) {
 }
 
 async function applyStyles(fontFamily, fontSize) {
-  console.log("APPLYING STYLES: ", { fontFamily, fontSize });
   const codeTextElements = document.getElementsByClassName("blob-code-inner");
   const codeTextElementsLen = codeTextElements.length;
   const codeLineNumElements = document.getElementsByClassName("blob-num");
@@ -119,7 +123,6 @@ window.onload = async function() {
 
 chrome.runtime.onMessage.addListener(function(request, _sender, sendResponse) {
   const data = request.data || {};
-  console.log({data});
 
   if (data.reset) {
     resetStyles();
@@ -158,14 +161,19 @@ function clearStorage() {
 }
 
 document.addEventListener('DOMContentLoaded', async function() {
-  const applyButton = document.getElementById('apply-button');
-  const resetButton = document.getElementById('reset-button');
-  const fontInput = document.getElementById('fontFamily');
-  const sizeInput = document.getElementById('fontSize');
+  const setFontName    = await getCurrentSetFontName() || '';
+  const setFontSize      = await getCurrentSetFontSize() || '';
+  const applyButton   = document.getElementById('apply-button');
+  const resetButton   = document.getElementById('reset-button');
+  const fontNameInput = document.getElementById('fontFamily');
+  const fontSizeInput = document.getElementById('fontSize');
+
+  fontNameInput.value = setFontName;
+  fontSizeInput.value = setFontSize;
 
   applyButton.addEventListener('click', function() {
-    const font = fontInput.value;
-    const size = sizeInput.value;
+    const font = fontNameInput.value;
+    const size = fontSizeInput.value;
     const fontStyles = {
       font,
       size: parseInt(size)
