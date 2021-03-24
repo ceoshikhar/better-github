@@ -2,10 +2,7 @@
 <html>
   <head>
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap"
-      rel="stylesheet"
-    >
+    <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Libre+Baskerville&display=swap" rel="stylesheet">
     <title>Better Github</title>
 
     <style>
@@ -13,27 +10,28 @@
         min-width: 220px;
         padding: 0;
         margin: 0;
-        border: 2px solid #111;
+        border: 2px solid RGB(42, 46, 47);
       }
 
       h2,
       p,
       label {
-        font-family: 'Fira Code', monospace;
         margin: 0;
         padding: 0;
-        font-size: 0.85rem;
+        font-size: 1rem;
+        color: RGB(42, 46, 47);
       }
 
       h2 {
-        font-size: 1.15rem;
+        font-family: 'Fjalla One', sans-serif;
+        font-size: 1.25rem;
         margin: 0.25em 0;
         text-align: center;
-        color: #047DC4;
       }
 
       p {
         text-align: center;
+        font-family: 'Libre Baskerville', serif;
       }
 
       label {
@@ -50,60 +48,63 @@
 
       form input {
         font-family: 'Fira Code', monospace;
-        color: #047DC4;
+        color: RGB(42, 46, 47);
         font-weight: normal;
         margin-top: 0.25em;
         border: none;
-        border-bottom: 1px solid #727272;
+        border-bottom: 1px solid RGB(42, 46, 47);
         box-sizing: border-box;
         padding: 0.25em 0;
         outline: none;
+        font-size: 1rem;
       }
 
       input::placeholder {
-        color: #047DC4;
+        color: RGB(42, 46, 47);
         opacity: 0.69;
       }
 
       button {
         width: 90%;
         padding: 0.5em 0.35em;
-        font-size: 1rem;
+        font-size: 1.15rem;
         border: none;
         cursor: pointer;
+        font-family: 'Fjalla One', sans-serif;
       }
 
       #apply-button {
-        background: #047DC4;
-        color: #F0F0F0;
+        background: RGB(42, 46, 47);
+        color: RGB(220, 221, 215);
       }
 
       #reset-button {
-        background: #F0F0F0;
-        color: #111;
+        color: RGB(42, 46, 47);
+        background: RGB(220, 221, 215);
+        margin-top: 1em;
       }
 
     </style>
   </head>
 
   <body>
-    <h2>Better Github</h2>
+    <h2>BETTER GITHUB</h2>
     <p>Enhance your code reading experience on GitHub</p>
     <br />
 
     <form id="form">
       <div>
         <label for="font-family">Font Family</label>
-        <input type="text" name="font-family" id="fontFamily" placeholder="Ex: Fira Code">
+        <input type="text" name="font-family" id="fontFamily" placeholder="Ex: Fira Code" autocomplete="off">
       </div>
       <br />
       <div>
         <label for="font-size">Font Size</label>
-        <input type="number" name="font-size" id="fontSize" placeholder="Ex: 16">
+        <input type="number" name="font-size" id="fontSize" placeholder="Ex: 16" autocomplete="off">
       </div>
       <br />
-      <button id="apply-button" type="submit">Apply</button>
-      <button id="reset-button">Reset</button>
+      <button id="apply-button" type="submit">APPLY</button>
+      <button id="reset-button">RESET</button>
     </form>
 
 
