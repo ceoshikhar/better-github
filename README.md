@@ -11,7 +11,7 @@
 - [x] Apply styles without reloading whenever the settings are changed from the browser action popup interface.
 - [x] If no custom font styles are set, load GitHub's default font styles.
 - [x] User can reset font styles to GitHub's default font styles.
-- [ ] Allow user to apply styles to either font family or font size instead of both being required.
 - [ ] Add GIF to show the usage of the extension.
 - [ ] Update README with instructions on how to manually download/clone the repo, install the extension and use it.
 - [ ] Better Github's logo for the extension favicon.
+- [ ] Allow user to apply styles to either font family or font size instead of both being required.
