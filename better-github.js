@@ -29,6 +29,32 @@ window.onload = async function() {
   observer.observe(bodyList, config);
 };
 
+// Apply the currently set font styles if they exist
+async function applyCurrentSetStyles() {
+  const currentSetFontStyles = await getCurrentSetFontStyles();
+  if (!currentSetFontStyles) return;
+
+  const { fontFamily, fontSize } = currentSetFontStyles;
+  applyStyles(fontFamily, fontSize);
+}
+
+// Reset the font styles to Github's default.
+function resetStyles() {
+  // These styles were taken from Google Chrome's inspect element tool on
+  // 24/3/2021. These default styles might change but it's not really that
+  // important otherwise it would defeat the whole purpose of `Better Github`.
+  const githubDefaultFontFamily = "SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace";
+  const githubDefaultFontSize   = "12px";
+
+  // Clear the storage so that when we reload/refresh or visit GitHub in another
+  // tab, we don't apply any custom styles. The real(coming from GitHub)
+  // GitHub's default styles are used.
+  clearStorage();
+  // Although we do apply the GitHub's "default styles" so that we don't have to
+  // manually refresh the current open tabs and this makes it feel "reactive".
+  applyStyles(githubDefaultFontFamily, githubDefaultFontSize);
+}
+
 // This is where the magic happens. As the name suggests, the function is 
 // responsible for applying the font styles to the code text elements on a page.
 //
@@ -65,34 +91,6 @@ function applyStyles(fontFamily, fontSize) {
     preElements[i].style.fontSize   = fontSize;
   }
 }
-
-// Apply the currently set font styles if they exist
-async function applyCurrentSetStyles() {
-  const currentSetFontStyles = await getCurrentSetFontStyles();
-  if (!currentSetFontStyles) return;
-
-  const { fontFamily, fontSize } = currentSetFontStyles;
-  applyStyles(fontFamily, fontSize);
-}
-
-
-// Reset the font styles to Github's default.
-function resetStyles() {
-  // These styles were taken from Google Chrome's inspect element tool on
-  // 24/3/2021. These default styles might change but it's not really that
-  // important otherwise it would defeat the whole purpose of `Better Github`.
-  const githubDefaultFontFamily = "SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace";
-  const githubDefaultFontSize   = "12px";
-
-  // Clear the storage so that when we reload/refresh or visit GitHub in another
-  // tab, we don't apply any custom styles. The real(coming from GitHub)
-  // GitHub's default styles are used.
-  clearStorage();
-  // Although we do apply the GitHub's "default styles" so that we don't have to
-  // manually refresh the current open tabs and this makes it feel "reactive".
-  applyStyles(githubDefaultFontFamily, githubDefaultFontSize);
-}
-
 
 // Better-Github's extension Popup UI handling to allow user to customize the
 // styles. Handles the `APPLY` and `RESET` button logic.
