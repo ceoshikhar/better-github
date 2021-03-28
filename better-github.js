@@ -10,21 +10,21 @@ window.onload = async function() {
   applyCurrentSetStyles();
 
   const bodyList = document.querySelector("body");
-  const observer = new MutationObserver(function (mutations) {
-    mutations.forEach(function() {
-      if (oldHref !== document.location.href) {
-        oldHref = document.location.href;
-        // When the user navigates on Github to other pages after the intial
-        // load, we apply the styles again on the new page on GitHub.
-        applyCurrentSetStyles();
-      }
-    });
-  });
-
   const config = {
     childList: true,
     subtree: true
   }
+
+  const observer = new MutationObserver(function (mutations) {
+    mutations.forEach(function() {
+      // When the user navigates on Github to other pages after the intial
+      // load, we apply the styles again on the new page on GitHub.
+      if (oldHref !== document.location.href) {
+        oldHref = document.location.href;
+        applyCurrentSetStyles();
+      }
+    });
+  });
 
   observer.observe(bodyList, config);
 };
@@ -40,8 +40,8 @@ async function applyCurrentSetStyles() {
 
 // Reset the font styles to Github's default.
 function resetStyles() {
-  // These styles were taken from Google Chrome's inspect element tool on
-  // 24/3/2021. These default styles might change but it's not really that
+  // These styles were taken from Google Chrome's(Windows) inspect element tool
+  // on 24/3/2021. These default styles might change but it's not really that
   // important otherwise it would defeat the whole purpose of `Better Github`.
   const githubDefaultFontFamily = "SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace";
   const githubDefaultFontSize   = "12px";
@@ -60,8 +60,8 @@ function resetStyles() {
 //
 // Apply font styles (font-name & font-size).
 // These styles are applied to :
-// - GitHub code viewer(reading files).
-// - Code in README files that are using "`<source code>`" blocks.
+// - Viewing/reading files.
+// - Code in README.md files that are using "`<source code>`" blocks.
 // - Code in pull request diffs. 
 //
 // FIXME: If the PR diffs are large and they are lazy loaded when scrolling 
@@ -165,14 +165,6 @@ chrome.runtime.onMessage.addListener(function(request, _sender, sendResponse) {
   sendResponse({ data, success: true });
 });
 
-// Store the current set font styles to this object so that we don't have to
-// fetch them from chrome storage API again. This improves the performance as we
-// don't do the async chrome storage API read calls on every new GitHub page.
-const cache = {
-  fontName: null,
-  fontSize: null
-};
-
 // Chrome's storage API allows us to store & fetch user's recent applied styles.
 // Save to chrome's storage. `data` should be an object like `{ key: value }`.
 function saveToStorage(data) {
@@ -205,6 +197,14 @@ async function getCurrentSetFontSize() {
   const currentFontSize = await getFromStorage("fontSize");
   return currentFontSize;
 }
+
+// Store the current set font styles to this object so that we don't have to
+// fetch them from chrome storage API again. This improves the performance as we
+// don't do the async chrome storage API read calls on every new GitHub page.
+const cache = {
+  fontName: null,
+  fontSize: null
+};
 
 function setCurrentSetFontName(name) {
   saveToStorage({ fontName: name });
