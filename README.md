@@ -1,10 +1,8 @@
 <div align="center">
-  <div style="display: flex; justify-content: center">
-    <img src="./assets/icon128.png" height="48px" style="margin-right: 1em"/>
+    <img src="./assets/icon128.png" height="48px" />
     <h1>better-github</h1>
-  </div>
   <p>🎨 Chrome extension to enhance your code reading experience on GitHub</p>
-</div>
+</div p>
 
 # Demo
 
@@ -14,11 +12,13 @@
 
 `Better Github` allows you to apply custom fonts and modify font size of code text. These styles are applied to :
 
+> Example below have the following Better GitHub's config: `Font Name` is [Hack](https://github.com/source-foundry/Hack) and `Font Size` is **14**.
+
 - All the text inside a file while viewing( reading ) it.
 
-  <img src="./assets/feature-1-example.png">
+   <img src="./assets/feature-1-example.png">
 
-- Code in README.md files that are inside "`<code>`" blocks also known as `<pre>` tags.
+- Code in README files that are inside "`<code>`" blocks also known as `<pre>` tags.
 
   <img src="./assets/feature-2-example.png">
 
