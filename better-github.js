@@ -1,33 +1,14 @@
-// This allows us to re-apply the font styles when we navigate on GitHub. As 
-// GitHub is an SPA we need to check if the location.href changes, we have to 
-// apply the styles again otherwise the font styles only apply to the first
-// GitHub page that is visited.
-let oldHref = document.location.href;
+// Do the magic once the DOM is completely loaded.
+window.onload = init;
 
-// Entry point of the extension to interact with the DOM on GitHub
-window.onload = async function() {
-  // We apply set font styles when GitHub page is loaded.
+// Entry point of the extension to interact with the DOM on GitHub.
+function init() {
+  // Apply font styles when DOM tree is completely loaded.
   applyCurrentSetStyles();
 
-  const bodyList = document.querySelector("body");
-  const config = {
-    childList: true,
-    subtree: true
-  }
-
-  const observer = new MutationObserver(function (mutations) {
-    mutations.forEach(function() {
-      // When the user navigates on Github to other pages after the intial
-      // load, we apply the styles again on the new page on GitHub.
-      if (oldHref !== document.location.href) {
-        oldHref = document.location.href;
-        applyCurrentSetStyles();
-      }
-    });
-  });
-
-  observer.observe(bodyList, config);
-};
+  // Apply font styles when DOM tree is mutated.
+  reApplyStylesOnDOMChange();
+}
 
 // Apply the currently set font styles if they exist
 async function applyCurrentSetStyles() {
@@ -36,6 +17,35 @@ async function applyCurrentSetStyles() {
 
   const { fontFamily, fontSize } = currentSetFontStyles;
   applyStyles(fontFamily, fontSize);
+}
+
+// Apply the custom styles whenever something on the DOM changes. Following are
+// some scenarios why this is important.
+//
+// 1. With larger PRs, sometimes diffs are loaded lazily. Which means, a DOM 
+// mutation is happening. If we don't re-apply the styles, the newly loaded
+// code text in the diff will have the defaul styles.
+//
+// 2. GitHub is an SPA. Which means, DOM is loaded only once. When you navigate
+// to other "pages" on GitHub, the DOM is changing( mutation ) and if we don't 
+// re-apply the styles, the code text on new page will have default styles.
+//
+// We don't care to check what the change is happening on the DOM, we just
+// re-apply the styles no matter what's happening. This shouldn't be affecting
+// the performance as all we are doing is changing the CSS styles, also there
+// are not so many DOM changes happening once the entire page content is loaded.
+function reApplyStylesOnDOMChange() {
+  // We pass `applyCurrentSetStyles` as the callback to `Mutation Observer`.
+  // This means, whenever a DOM mutation is observed it fires the callback.
+  const observer = new MutationObserver(applyCurrentSetStyles);
+
+  const targetNode = document.querySelector("body");
+  const config = {
+    childList: true,
+    subtree: true
+  }
+
+  observer.observe(targetNode, config);
 }
 
 // Reset the font styles to Github's default.
@@ -47,8 +57,8 @@ function resetStyles() {
   const githubDefaultFontSize   = "12px";
 
   // Clear the storage so that when we reload/refresh or visit GitHub in another
-  // tab, we don't apply any custom styles. The real(coming from GitHub)
-  // GitHub's default styles are used.
+  // tab, we don't apply any custom styles including the above two mentioned.
+  // The real(coming from GitHub) GitHub's default styles are used.
   clearStorage();
   // Although we do apply the GitHub's "default styles" so that we don't have to
   // manually refresh the current open tabs and this makes it feel "reactive".
@@ -60,14 +70,9 @@ function resetStyles() {
 //
 // Apply font styles (font-name & font-size).
 // These styles are applied to :
-// - Viewing/reading files.
-// - Code in README.md files that are using "`<source code>`" blocks.
-// - Code in pull request diffs. 
-//
-// FIXME: If the PR diffs are large and they are lazy loaded when scrolling 
-// through the diffs, the custom styles are not applied on the new fetched
-// diffs. Maybe have a code lines "length" count check in `MutationObserver`
-// just like we did for `location.href`?
+// - All the text inside a file while viewing( reading ) it.
+// - Code in README files that are inside "`<code>`" blocks also known as `<pre>` tags.
+// - Code in pull request diffs.
 function applyStyles(fontFamily, fontSize) {
   const codeTextElements        = document.getElementsByClassName("blob-code-inner");
   const codeTextElementsLen     = codeTextElements.length;
@@ -92,8 +97,8 @@ function applyStyles(fontFamily, fontSize) {
   }
 }
 
-// Better-Github's extension Popup UI handling to allow user to customize the
-// styles. Handles the `APPLY` and `RESET` button logic.
+// Extension's browser action popup UI handling to allow user to customize the
+// settings of the styles. Handles the `APPLY` and `RESET` button logic.
 document.addEventListener('DOMContentLoaded', async function() {
   const setFontName   = await getCurrentSetFontName() || "";
   const setFontSize   = await getCurrentSetFontSize() || "";
@@ -142,15 +147,18 @@ document.addEventListener('DOMContentLoaded', async function() {
 chrome.runtime.onMessage.addListener(function(request, _sender, sendResponse) {
   const data = request.data || {};
 
-  if (data.reset) {
+  const shouldReset = data.reset === true;
+  const doNothing = !data.font || !data.size;
+
+  if (shouldReset) {
     resetStyles();
   };
 
-  // TODO: Right now we ignore if both the fields are empty but soon we need to
-  // allow user to provided either one of the properties (font family or font
+  // TODO: Right now we ignore if any 1 of the fields are empty but soon we need
+  // to allow user to provide either one of the properties (font name or font
   // size) and we should apply just that style instead of making both of the
-  // properties required.
-  if (!data.font || !data.size) {
+  // properties required. So that user can change only one property (name or size).
+  if (doNothing) {
     return;
   }
 
@@ -166,6 +174,7 @@ chrome.runtime.onMessage.addListener(function(request, _sender, sendResponse) {
 });
 
 // Chrome's storage API allows us to store & fetch user's recent applied styles.
+
 // Save to chrome's storage. `data` should be an object like `{ key: value }`.
 function saveToStorage(data) {
   chrome.storage.sync.set(data);
@@ -177,8 +186,8 @@ function saveToStorage(data) {
 function getFromStorage(key) {
   return new Promise(function(resolve, _reject) {
     chrome.storage.sync.get([`${key}`], function(result) {
-      const data = result[`${key}`];
-      resolve(data);
+      const value = result[`${key}`];
+      resolve(value);
     });
   });
 }

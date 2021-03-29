@@ -34,7 +34,7 @@
 
 Default font size of code text was very small which gave me had a hard time reading code in any repository and in PR diffs. I also wanted my code editor font and GitHub font to be same.
 
-Couldn't find anything existing to help me solve my problem, so I created this simple yet powerful extension for Chrome browser.
+Couldn't find anything existing to help me solve my problem, so I created this simple yet powerful extension for Chrome browser. If something does exist though, let me know, alright?
 
 I called it `Better GitHub` inspired by `Better Twitch TV` and `Better Discord`.
 
@@ -42,23 +42,27 @@ I called it `Better GitHub` inspired by `Better Twitch TV` and `Better Discord`.
 
 > Might seem impossible but a $5 fee to publish it to Chrome store is not what I can afford if no one ends up needing this extension. I created this extension for myself and decided to make it public. If people like it and use it, definitely I will publish it. For now, I am sure you are a developer as this extension literally is for GitHub where you are reading this right now, so this shouldn't bother you much. Once again, sorry for the "inconvenience" but it is what it is.
 
-1. Clone/download this repository to your machine. Read [this](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) for learning how to do it.
-2. Go to `chrome://extensions` in your chrome to get to the extensions "management" page.
-3. Enable `Developer mode`, by toggling the switch on the top right corner.
-4. Click on `Load unpacked` button on the top left corner and a dialog box will open to select the extension.
-5. Go to the repository folder's root( where the `manifest.json` file can be found ) and click on `Select Folder` button in the bottom right.
+1. Clone/download this repository to your machine. Read [this](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) if you don't know how.
+2. Go to `chrome://extensions` get to the extensions "management" page.
+3. Enable `Developer mode`, by toggling the switch at the top right corner.
+4. Click on `Load unpacked` button at the top left corner and a dialog box will open to select the extension.
+5. Go to the repository folder's root( where the `manifest.json` file can be found ) and click on `Select Folder` button at the bottom right.
 
 Done! You have successfully installed `Better GitHub` extension manually. Now you can disable `Developer mode` by toggling the switch back.
 
-# WIP Todos
+**Before starting to use the extension, make sure to refresh the already opened GitHub tabs otherwise the extension won't work for them but will work on newly opened tabs.**
+
+# Todos
+
+> Context: I created this list of tasks after I decided to make this extension public. Initially the code was very small and the font styles were hard coded. If I needed to modify the styles, I had to change it in the source code, reload the extension and refresh GitHub pages to reflect the updates.
 
 - [x] Instead of hard coding the `fontFamily` and `fontSize`, we should be able to allow the user to choose a font size and font family of their choice (which they have installed on their machine).
-- [x] Create a browser action popup to show expose an interface to allow the user to edit `fontFamily` and `fontSize`.
-- [x] Integrate browser action popup with chrome API to persist and read user's settings for `fontFamily` and `fontSize` to the storage.
+- [x] Create a browser action popup to show an interface to allow the user to customise their extension's settings for `fontFamily` and `fontSize`.
+- [x] Integrate browser action popup with chrome API to persist and read user's settings for `fontFamily` and `fontSize` from and to the storage.
 - [x] Apply styles without reloading whenever the settings are changed from the browser action popup interface.
 - [x] If no custom font styles are set, load GitHub's default font styles.
 - [x] User can reset font styles to GitHub's default font styles.
 - [x] Add GIF to show the usage( demo ) of the extension.
-- [x] Installation - instructions on how to download/clone the repo, install the extension and use it.
-- [x] Better Github's logo for the extension favicon and icon.
-- [ ] Allow user to apply styles to either font family or font size instead of both fields being mandatory.
+- [x] Installation instructions on how to clone/download this repository, install the extension and use it.
+- [x] Logo for the extension that will be used as favicon, icon, in documentation etc.
+- [ ] Allow user to change only one property, either font name or font size instead of both properties being mandatory.

@@ -1,145 +1,145 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<link rel="preconnect" href="https://fonts.gstatic.com" />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Source+Code+Pro&display=swap"
-			rel="stylesheet"
-		/>
-		<title>Better Github</title>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Source+Code+Pro&display=swap"
+      rel="stylesheet"
+    />
+    <title>Better Github</title>
 
-		<style>
-			body {
-				min-width: 220px;
-				padding: 0;
-				margin: 0;
-				border: 2px solid RGB(42, 46, 47);
-			}
+    <style>
+      body {
+        min-width: 220px;
+        padding: 0;
+        margin: 0;
+        border: 2px solid RGB(42, 46, 47);
+      }
 
-			h2,
-			p,
-			label {
-				margin: 0;
-				padding: 0;
-				font-size: 1rem;
-				color: RGB(42, 46, 47);
-			}
+      h2,
+      p,
+      label {
+        margin: 0;
+        padding: 0;
+        font-size: 1rem;
+        color: RGB(42, 46, 47);
+      }
 
-			h2 {
-				font-family: 'Fjalla One', sans-serif;
-				font-size: 1.25rem;
-				margin: 0.25em 0;
-				text-align: center;
-			}
+      h2 {
+        font-family: 'Fjalla One', sans-serif;
+        font-size: 1.25rem;
+        margin: 0.25em 0;
+        text-align: center;
+      }
 
-			p {
-				text-align: center;
-				font-family: 'Source Code Pro', monospace;
-			}
+      p {
+        text-align: center;
+        font-family: 'Source Code Pro', monospace;
+      }
 
-			label {
-				display: block;
-				text-align: left;
-				font-weight: bold;
-			}
+      label {
+        display: block;
+        text-align: left;
+        font-weight: bold;
+      }
 
-			form {
-				width: 100%;
-				padding: 1em;
-				padding-top: 0;
-			}
+      form {
+        width: 100%;
+        padding: 1em;
+        padding-top: 0;
+      }
 
-			form input {
-				font-family: 'Source Code Pro', monospace;
-				color: RGB(42, 46, 47);
-				font-weight: normal;
-				margin-top: 0.25em;
-				border: none;
-				border-bottom: 1px solid RGB(42, 46, 47);
-				box-sizing: border-box;
-				padding: 0.25em 0;
-				outline: none;
-				font-size: 0.85rem;
-				width: 90%;
-			}
+      form input {
+        font-family: 'Source Code Pro', monospace;
+        color: RGB(42, 46, 47);
+        font-weight: normal;
+        margin-top: 0.25em;
+        border: none;
+        border-bottom: 1px solid RGB(42, 46, 47);
+        box-sizing: border-box;
+        padding: 0.25em 0;
+        outline: none;
+        font-size: 0.85rem;
+        width: 90%;
+      }
 
-			input::placeholder {
-				color: RGB(42, 46, 47);
-				opacity: 0.69;
-			}
+      input::placeholder {
+        color: RGB(42, 46, 47);
+        opacity: 0.69;
+      }
 
-			#warning {
-				text-align: left;
-				font-size: 0.75rem;
-				margin-top: 0.5em;
-			}
+      #warning {
+        text-align: left;
+        font-size: 0.75rem;
+        margin-top: 0.5em;
+      }
 
-			button {
-				width: 90%;
-				padding: 0.5em 0.35em;
-				font-size: 1.15rem;
-				border: none;
-				cursor: pointer;
-				font-family: 'Fjalla One', sans-serif;
-			}
+      button {
+        width: 90%;
+        padding: 0.5em 0.35em;
+        font-size: 1.15rem;
+        border: none;
+        cursor: pointer;
+        font-family: 'Fjalla One', sans-serif;
+      }
 
-			#apply-button {
-				background: RGB(42, 46, 47);
-				color: RGB(249, 246, 239);
-			}
+      #apply-button {
+        background: RGB(42, 46, 47);
+        color: RGB(249, 246, 239);
+      }
 
-			#reset-button {
-				color: RGB(42, 46, 47);
-				background: RGB(249, 246, 239);
-				margin-top: 0.5em;
-			}
+      #reset-button {
+        color: RGB(42, 46, 47);
+        background: RGB(249, 246, 239);
+        margin-top: 0.5em;
+      }
 
-			.flex {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-			}
+      .flex {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
 
-			.flex img {
-				margin-right: 0.5em;
-			}
-		</style>
-	</head>
+      .flex img {
+        margin-right: 0.5em;
+      }
+    </style>
+  </head>
 
-	<body>
-		<div class="flex">
-			<img src="./assets/icon-no-bg.png" alt="logo" />
-			<h2>BETTER GITHUB</h2>
-		</div>
+  <body>
+    <div class="flex">
+      <img src="./assets/icon-no-bg.png" alt="logo" />
+      <h2>BETTER GITHUB</h2>
+    </div>
 
-		<form id="form">
-			<div>
-				<label for="font-name">Font Name</label>
-				<input
-					type="text"
-					name="font-name"
-					id="font-name-input"
-					placeholder="Ex: Fira Code"
-					autocomplete="off"
-				/>
-			</div>
-			<br />
-			<div>
-				<label for="font-size">Font Size</label>
-				<input
-					type="number"
-					name="font-size"
-					id="font-size-input"
-					placeholder="Ex: 16"
-					autocomplete="off"
-				/>
-			</div>
-			<p id="warning"><strong>*</strong> Both fields are required</p>
-			<br />
-			<button id="apply-button" type="submit">APPLY</button>
-			<button id="reset-button">RESET</button>
-		</form>
+    <form id="form">
+      <div>
+        <label for="font-name">Font Name</label>
+        <input
+          type="text"
+          name="font-name"
+          id="font-name-input"
+          placeholder="Ex: Fira Code"
+          autocomplete="off"
+        />
+      </div>
+      <br />
+      <div>
+        <label for="font-size">Font Size</label>
+        <input
+          type="number"
+          name="font-size"
+          id="font-size-input"
+          placeholder="Ex: 16"
+          autocomplete="off"
+        />
+      </div>
+      <p id="warning"><strong>*</strong> Both fields are required</p>
+      <br />
+      <button id="apply-button" type="submit">APPLY</button>
+      <button id="reset-button">RESET</button>
+    </form>
 
-		<script src="better-github.js" type="text/javascript"></script>
-	</body>
+    <script src="better-github.js" type="text/javascript"></script>
+  </body>
 </html>
