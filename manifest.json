@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "Better Github",
 	"version": "1.0.0",
-	"description": "Improve your code reading experience on GitHub",
+	"description": "Enhance your code reading experience on GitHub",
 	"content_scripts": [
 		{
 			"js": ["better-github.js"],
