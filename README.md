@@ -1,8 +1,4 @@
-<div align="center">
-    <img src="./assets/icon128.png" height="48px" />
-    <h1>better-github</h1>
-  <p>🎨 Chrome extension to enhance your code reading experience on GitHub</p>
-</div p>
+![readme banner](./assets/banner.png)
 
 # Demo
 
