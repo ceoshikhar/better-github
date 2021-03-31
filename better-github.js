@@ -1,5 +1,14 @@
+// Store the current set font styles to this object so that we don't have to
+// fetch them from chrome storage API again and again.
+// This improves the performance as we don't do the async chrome storage API 
+// read calls every time `applyCurrentSetStyles` is called.
+const cache = {
+  fontName: null,
+  fontSize: null
+};
+
 // Do the magic once the DOM is completely loaded.
-window.onload = init;
+window.onload = init();
 
 // Entry point of the extension to interact with the DOM on GitHub.
 function init() {
@@ -39,13 +48,7 @@ function reApplyStylesOnDOMChange() {
   // This means, whenever a DOM mutation is observed it fires the callback.
   const observer = new MutationObserver(applyCurrentSetStyles);
 
-  const targetNode = document.querySelector("body");
-  const config = {
-    childList: true,
-    subtree: true
-  }
-
-  observer.observe(targetNode, config);
+  observer.observe(document, { childList: true, subtree: true });
 }
 
 // Reset the font styles to Github's default.
@@ -165,8 +168,8 @@ chrome.runtime.onMessage.addListener(function(request, _sender, sendResponse) {
   const name = data.font;
   const size = data.size;
 
-  saveToStorage({ fontName: name });
-  saveToStorage({ fontSize: size });
+  setCurrentSetFontName(name);
+  setCurrentSetFontSize(size);
 
   const { fontFamily, fontSize } = genFontStyles(name, size);
   applyStyles(fontFamily, fontSize);
@@ -207,20 +210,12 @@ async function getCurrentSetFontSize() {
   return currentFontSize;
 }
 
-// Store the current set font styles to this object so that we don't have to
-// fetch them from chrome storage API again. This improves the performance as we
-// don't do the async chrome storage API read calls on every new GitHub page.
-const cache = {
-  fontName: null,
-  fontSize: null
-};
-
 function setCurrentSetFontName(name) {
   saveToStorage({ fontName: name });
   cache.fontName = name;
 }
 
-function setCurrentSetFontName(size) {
+function setCurrentSetFontSize(size) {
   saveToStorage({ fontSize: size });
   cache.fontSize = size;
 }
