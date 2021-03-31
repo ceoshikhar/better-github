@@ -6,7 +6,7 @@
   "content_scripts": [
     {
       "js": ["better-github.js"],
-      "matches": ["https://github.com/*"]
+      "matches": ["*://*.github.com/*"]
     }
   ],
   "permissions": ["storage"],
@@ -19,5 +19,11 @@
     "16": "./assets/icon16.png",
     "48": "./assets/icon48.png",
     "128": "./assets/icon128.png"
+  },
+  "applications": {
+    "gecko": {
+      "id": "better-github@ceoshikhar.com",
+      "strict_min_version": "1.0.0"
+    }
   }
 }
