@@ -2,7 +2,7 @@
  * Prerequisites for this script to work :
  * 1. `zip` util binary installed, run `zip --version` to check if you have it 
  * or not. If you get something like `command not found: zip` then you don't
- * have it, so install it.
+ * have it, so install it. `zip` is not needed for generating manifest.json.
  * 2. `rm -rf` should work. This is available on `linux` and `unix` machines.
  * Don't know what you need to do for it to work on `windows`. I use WSL.
  * 
