@@ -2,10 +2,14 @@
 
 <div align="center">
   <h1>better-github</h1>
-  <p>🎨 Enhance your code reading experience on GitHub</p>
+  <p><strong>🎨 Enhance your code reading experience on GitHub</strong></p>
+  <h3 align="center">
     <a href="https://addons.mozilla.org/en-US/firefox/addon/bettergithub/">Firefox</a>
-    <a href="#install-on-chrome">| Chrome</a>
-    <a href="#donate">| Donate</a>
+    <span> · </span>
+    <a href="#install-on-chrome">Chrome</a>
+    <span> · </span>
+    <a href="#donate">Donate</a>
+  </h3>
 </div>
 
 # Demo
