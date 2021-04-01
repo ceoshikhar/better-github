@@ -1,30 +1,37 @@
 /**
- * This is the  script that you can use to :
- * 1. Generate package.zip for the specified browser 
- * 2. Create manifest.json file for the specified browser
+ * Prerequisites for this script to work :
+ * 1. `zip` util binary installed, run `zip --version` to check if you have it 
+ * or not. If you get something like `command not found: zip` then you don't
+ * have it, so install it.
+ * 2. `rm -rf` should work. This is available on `linux` and `unix` machines.
+ * Don't know what you need to do for it to work on `windows`. I use WSL.
+ * 
+ * This is the script that you can use to :
+ * 1. Package the extension to better-github.zip for the specified browser.
+ *    Generally for publication or distribution of the extension.
+ * 2. Generate manifest.json file for the specified browser. 
  * 
  * USAGE :
- * - node script <browser> [options]
+ * - node script <browser> [options] OR you can run scripts from `package.json`
  *  
- * Valid values for `<browser>` are - "chrome" and "firefox" 
+ * Valid values for `<browser>` are : "chrome" and "firefox" 
  * Valid options :
- * 1. `-m` : To generate only the manifest
- * If no `options` are provided, the package.zip will be generated
- * If the script is used to generate the package.zip, the manifest.json will be
- * deleted after packaging the files.
+ * 1. `-m` : To generate only the manifest.json and not generate package.zip
  * 
  * EXAMPLE :
- * 1. Generate package.zip for chrome : `node script chrome`
- * 2. Generate manifest for firefox : `node script firefox -m`
+ * 1. Generate better-github.zip for chrome : `node script chrome`
+ * 2. Generate manifest.json for firefox : `node script firefox -m`
  */
 
 const fs = require("fs");
 const childProcess = require("child_process");
 
+// NOTE: Update the `version` here and in `package.json` whenever a new release
+// of the extension is published.
 const chromeManifestContent = {
   "manifest_version": 2,
   "name": "Better Github",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Enhance your code reading experience on GitHub",
   "content_scripts": [
     {
@@ -45,12 +52,13 @@ const chromeManifestContent = {
   }
 };
 
+// For Firefox's manifest, we just have to add one extra property: "applications"
 const firefoxManifestContent = {
   ...chromeManifestContent,
   "applications": {
     "gecko": {
       "id": "better-github@ceoshikhar.com",
-      "strict_min_version": "1.0.0"
+      "strict_min_version": "80.0"
     }
   }
 };
@@ -63,7 +71,9 @@ const browser         = args[0];
 const validBrowsers   = ['chrome', 'firefox'];
 const genOnlyManifest = browser && args[1] === '-m' ? true : false;
 const manifest        = 'manifest.json';
-const thingsToZip     = ['assets/*', 'better-github.js', manifest, 'popup.html', 'styles.css'];
+const thingsToZip     = ['assets/icon16.png', 'assets/icon48.png', 'assets/icon128.png',
+                         'assets/favicon.png', 'assets/icon-no-bg.png',
+                         'better-github.js', manifest, 'popup.html', 'styles.css'];
 const package         = 'better-github.zip';
 
 function browserType() {
@@ -116,12 +126,11 @@ function generateNewPackage() {
   maybeDeletePackage();
 
   const command = `zip ${package} ${thingsToZip.join(' ')}`
-  console.log("Zipping the files : ", { command });
+  console.log("Zipping the files : ", command);
   childProcess.execSync(command);
 }
 
 function main() {
-  console.log({ args, len: args.length });
   makeSureArgsAreValid();
 
   if (genOnlyManifest) {
@@ -129,7 +138,6 @@ function main() {
   } else {
     refreshManifest();
     generateNewPackage();
-    maybeDeleteManifest();
   }
 }
 
