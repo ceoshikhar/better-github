@@ -57,10 +57,11 @@ I called it `Better GitHub` inspired by `Better Twitch TV` and `Better Discord`.
 > Might seem impossible but a $5 fee to publish it to Chrome store is not what I can afford if no one ends up needing this extension. I created this extension for myself and decided to make it public. If people like it and use it, definitely I will publish it. For now, I am sure you are a developer as this extension literally is for GitHub where you are reading this right now, so this shouldn't bother you much. Once again, sorry for the "inconvenience" but it is what it is. If you want, you can [donate](#donate) towards the project to help me publish it to [chrome web store](https://chrome.google.com/webstore/category/extensions). Publication for Firefox is free hence you can find this extension [there](https://addons.mozilla.org/en-US/firefox/addon/bettergithub/).
 
 1. Clone/download this repository to your machine. Read [this](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) if you don't know how.
-2. Go to `chrome://extensions` get to the extensions "management" page.
-3. Enable `Developer mode`, by toggling the switch at the top right corner.
-4. Click on `Load unpacked` button at the top left corner and a dialog box will open to select the extension.
-5. Go to the repository folder's root( where the `manifest.json` file can be found ) and click on `Select Folder` button at the bottom right.
+2. Rename `manifest-chrome.json` to `manifest.json`.
+3. Go to `chrome://extensions` to get to the extensions "management" page.
+4. Enable `Developer mode`, by toggling the switch at the top right corner.
+5. Click on `Load unpacked` button at the top left corner and a dialog box will open to select the extension.
+6. Go to the repository folder's root( where the `manifest.json` file can be found ) and click on `Select Folder` button at the bottom right.
 
 Done! You have successfully installed `Better GitHub` extension manually. Now you can disable `Developer mode` by toggling the switch back.
 
