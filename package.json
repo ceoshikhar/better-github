@@ -1,0 +1,25 @@
+{
+  "name": "better-github",
+  "version": "1.0.1",
+  "description": "Enhance your code reading experience on GitHub",
+  "author": {
+    "name": "Shikhar Sharma",
+    "email": "ceoshikhar@gmail.com"
+  },
+  "license": "MIT",
+  "main": "better-github.js",
+  "scripts": {
+    "chrome:package": "node script chrome",
+    "firefox:package": "node script firefox",
+    "chrome:manifest": "node script chrome -m",
+    "firefox:manifest": "node script firefox -m"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ceoshikhar/better-github.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ceoshikhar/better-github/issues"
+  },
+  "homepage": "https://github.com/ceoshikhar/better-github#readme"
+}

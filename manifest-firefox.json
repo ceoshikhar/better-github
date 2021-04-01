@@ -1,15 +1,21 @@
 {
   "manifest_version": 2,
   "name": "Better Github",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Enhance your code reading experience on GitHub",
   "content_scripts": [
     {
-      "js": ["better-github.js"],
-      "matches": ["https://github.com/*"]
+      "js": [
+        "better-github.js"
+      ],
+      "matches": [
+        "*://*.github.com/*"
+      ]
     }
   ],
-  "permissions": ["storage"],
+  "permissions": [
+    "storage"
+  ],
   "browser_action": {
     "default_title": "Better Github",
     "default_icon": "./assets/favicon.png",
@@ -19,5 +25,11 @@
     "16": "./assets/icon16.png",
     "48": "./assets/icon48.png",
     "128": "./assets/icon128.png"
+  },
+  "applications": {
+    "gecko": {
+      "id": "better-github@ceoshikhar.com",
+      "strict_min_version": "80.0"
+    }
   }
 }
