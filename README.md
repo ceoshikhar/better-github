@@ -4,9 +4,9 @@
   <h1>better-github</h1>
   <p><strong>🎨 Enhance your code reading experience on GitHub</strong></p>
   <h3 align="center">
-    <a href="https://addons.mozilla.org/en-US/firefox/addon/bettergithub/" target="_blank">Firefox</a>
+    <a href="https://addons.mozilla.org/en-US/firefox/addon/bettergithub/">Firefox</a>
     <span> · </span>
-    <a href="https://chrome.google.com/webstore/detail/better-github/ammeaejgjdeifjekkofhnliedhccbmgp" target="_blank">Chrome</a>
+    <a href="https://chrome.google.com/webstore/detail/better-github/ammeaejgjdeifjekkofhnliedhccbmgp">Chrome</a>
     <span> · </span>
     <a href="#donate">Donate</a>
   </h3>
