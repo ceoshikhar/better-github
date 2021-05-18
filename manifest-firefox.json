@@ -9,7 +9,7 @@
         "better-github.js"
       ],
       "matches": [
-        "*://*.github.com/*"
+        "https://github.com/*"
       ]
     }
   ],

@@ -235,8 +235,7 @@ async function getCurrentSetFontStyles() {
   };
   
   // Everything below here will be executed only during the first time the
-  // document is loaded. After that, `cache` will always have `cache.fontName`
-  // and `cache.fontSize`.
+  // document is loaded. After that, `cache` will always have latest font styles.
 
   const currentSetFontName = await getCurrentSetFontName();
   const currentSetFontSize = await getCurrentSetFontSize();

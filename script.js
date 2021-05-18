@@ -36,7 +36,7 @@ const chromeManifestContent = {
   "content_scripts": [
     {
       "js": ["better-github.js"],
-      "matches": ["*://*.github.com/*"]
+      "matches": ["https://github.com/*"]
     }
   ],
   "permissions": ["storage"],
