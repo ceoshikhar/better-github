@@ -1,6 +1,6 @@
 // Store the current set font styles to this object so that we don't have to
 // fetch them from chrome storage API again and again.
-// This improves the performance as we don't do the async chrome storage API 
+// This improves the performance as we don't do the async chrome storage API
 // read calls every time `applyCurrentSetStyles` is called.
 const cache = {
   fontName: null,
@@ -31,12 +31,12 @@ async function applyCurrentSetStyles() {
 // Apply the custom styles whenever something on the DOM changes. Following are
 // some scenarios why this is important.
 //
-// 1. With larger PRs, sometimes diffs are loaded lazily. Which means, a DOM 
+// 1. With larger PRs, sometimes diffs are loaded lazily. Which means, a DOM
 // mutation is happening. If we don't re-apply the styles, the newly loaded
 // code text in the diff will have the defaul styles.
 //
 // 2. GitHub is an SPA. Which means, DOM is loaded only once. When you navigate
-// to other "pages" on GitHub, the DOM is changing( mutation ) and if we don't 
+// to other "pages" on GitHub, the DOM is changing( mutation ) and if we don't
 // re-apply the styles, the code text on new page will have default styles.
 //
 // We don't care to check what the change is happening on the DOM, we just
@@ -68,7 +68,7 @@ function resetStyles() {
   applyStyles(githubDefaultFontFamily, githubDefaultFontSize);
 }
 
-// This is where the magic happens. As the name suggests, the function is 
+// This is where the magic happens. As the name suggests, the function is
 // responsible for applying the font styles to the code text elements on a page.
 //
 // Apply font styles (font-name & font-size).
@@ -78,23 +78,20 @@ function resetStyles() {
 // - Code in pull request diffs.
 function applyStyles(fontFamily, fontSize) {
   const codeTextElements        = document.getElementsByClassName("blob-code-inner");
-  const codeTextElementsLen     = codeTextElements.length;
   const codeLineNumElements     = document.getElementsByClassName("blob-num");
-  const codeLineNumElementsLen  = codeLineNumElements.length;
   const preElements             = document.querySelectorAll("pre");
-  const preElementsLen          = preElements.length;
 
-  for (let i = 0; i < codeTextElementsLen; i++) {
+  for (let i = 0; i < codeTextElements.length; i++) {
     codeTextElements[i].style.fontFamily  = fontFamily;
     codeTextElements[i].style.fontSize    = fontSize;
   }
 
-  for (let i = 0; i < codeLineNumElementsLen; i++) {
+  for (let i = 0; i < codeLineNumElements.length; i++) {
     codeLineNumElements[i].style.fontFamily = fontFamily;
     codeLineNumElements[i].style.fontSize   = fontSize;
   }
 
-  for (let i = 0; i < preElementsLen; i++ ){
+  for (let i = 0; i < preElements.length; i++ ){
     preElements[i].style.fontFamily = fontFamily;
     preElements[i].style.fontSize   = fontSize;
   }
@@ -123,7 +120,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     // We get the details of all the tabs open and send message to all the
-    // tabs with the new font styles data. All the tabs with GitHub open 
+    // tabs with the new font styles data. All the tabs with GitHub open
     // will read this message and apply the new styles sent in the message.
     chrome.tabs.query({}, function(tabs) {
       tabs.map(function(tab) {
@@ -220,7 +217,7 @@ function setCurrentSetFontSize(size) {
   cache.fontSize = size;
 }
 
-// Generates correct styles by adding `px` for `size` and  adding 
+// Generates correct styles by adding `px` for `size` and  adding
 // `'monospace'` for `name`.
 function genFontStyles(name, size) {
   const fontFamily  = `${name}, 'monospace'`;
@@ -233,7 +230,7 @@ async function getCurrentSetFontStyles() {
   if (cache.fontName && cache.fontSize) {
     return genFontStyles(cache.fontName, cache.fontSize);
   };
-  
+
   // Everything below here will be executed only during the first time the
   // document is loaded. After that, `cache` will always have latest font styles.
 

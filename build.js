@@ -1,23 +1,23 @@
 /**
+ * This is the build script that you can use to :
+ * 1. Package the extension to better-github.zip for the specified browser.
+ *    Generally for publication or distribution of the extension.
+ * 2. Generate manifest.json file for the specified browser.
+ *
  * Prerequisites for this script to work :
- * 1. `zip` util binary installed, run `zip --version` to check if you have it 
+ * 1. `zip` util binary installed, run `zip --version` to check if you have it
  * or not. If you get something like `command not found: zip` then you don't
  * have it, so install it. `zip` is not needed for generating manifest.json.
  * 2. `rm -rf` should work. This is available on `linux` and `unix` machines.
  * Don't know what you need to do for it to work on `windows`. I use WSL.
- * 
- * This is the script that you can use to :
- * 1. Package the extension to better-github.zip for the specified browser.
- *    Generally for publication or distribution of the extension.
- * 2. Generate manifest.json file for the specified browser. 
- * 
+ *
  * USAGE :
  * - node script <browser> [options] OR you can run scripts from `package.json`
- *  
- * Valid values for `<browser>` are : "chrome" and "firefox" 
+ *
+ * Valid values for `<browser>` are : "chrome" and "firefox"
  * Valid options :
  * 1. `-m` : To generate only the manifest.json and not generate package.zip
- * 
+ *
  * EXAMPLE :
  * 1. Generate better-github.zip for chrome : `node script chrome`
  * 2. Generate manifest.json for firefox : `node script firefox -m`
@@ -25,6 +25,15 @@
 
 const fs = require("fs");
 const childProcess = require("child_process");
+const chalk = require("chalk");
+
+function green(text) {
+  return chalk.green(text);
+}
+
+function red(text) {
+  return chalk.red.underline(text);
+}
 
 // NOTE: Update the `version` here and in `package.json` whenever a new release
 // of the extension is published.
@@ -98,7 +107,7 @@ function makeSureArgsAreValid() {
 
 function maybeDeleteManifest() {
   const command = `rm -rf ${manifest}`;
-  console.log(`Deleting old ${manifest} if exists`);
+  console.log(green(`> Deleting `) + red(`old ${manifest}`) + green(` if exists`));
   childProcess.execSync(command);
 }
 
@@ -108,7 +117,7 @@ function refreshManifest() {
   // Create new manifest.json and put `chromeManifestContent` if the build is
   // for Chrome browser otherwise put `firefoxManifestContent` if the build is
   // for Firefox browser.
-  console.log(`Generating new ${manifest} for ${browser}`);
+  console.log(green(`> Generating `) + red(`new ${manifest}`) + green(` for ${browser}`));
   if (browserType().isChrome) {
     fs.writeFileSync(manifest, JSON.stringify(chromeManifestContent, null, 2));
   } else if (browserType().isFirefox) {
@@ -118,7 +127,7 @@ function refreshManifest() {
 
 function maybeDeletePackage() {
   const command = `rm -rf ${package}`;
-  console.log(`Deleting old ${package} if exists`);
+  console.log(green(`Deleting `) + red(`old ${package} `) + green(`if exists`));
   childProcess.execSync(command);
 }
 
@@ -126,11 +135,13 @@ function generateNewPackage() {
   maybeDeletePackage();
 
   const command = `zip ${package} ${thingsToZip.join(' ')}`
-  console.log("Zipping the files : ", command);
+  console.log(green(`Zipping the following files to `) + red(`${package} :`)  , command);
   childProcess.execSync(command);
 }
 
 function main() {
+  const t0 = Date.now();
+
   makeSureArgsAreValid();
 
   if (genOnlyManifest) {
@@ -139,6 +150,10 @@ function main() {
     refreshManifest();
     generateNewPackage();
   }
+
+  const t1 = Date.now();
+  const timeTaken = t1 - t0;
+  console.log(chalk.black.bgYellowBright(`Built in: ${timeTaken}ms`));
 }
 
 main();
