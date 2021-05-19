@@ -74,16 +74,16 @@ const firefoxManifestContent = {
 
 // The first element will be 'node', the second element will be the name of the
 // JS file. The next elements will be any additional command line arguments.
-const args            = process.argv.slice(2);
-const maxArgs         = 2;
-const browser         = args[0];
-const validBrowsers   = ['chrome', 'firefox'];
-const genOnlyManifest = browser && args[1] === '-m' ? true : false;
-const manifest        = 'manifest.json';
-const thingsToZip     = ['assets/icon16.png', 'assets/icon48.png', 'assets/icon128.png',
-                         'assets/favicon.png', 'assets/icon-no-bg.png',
-                         'better-github.js', manifest, 'popup.html', 'styles.css'];
-const package         = 'better-github.zip';
+const args                = process.argv.slice(2);
+const maxArgs             = 2;
+const browser             = args[0];
+const validBrowsers       = ['chrome', 'firefox'];
+const shouldBuildPackage  = browser && args[1] === '-m' ? false : true;
+const manifest            = 'manifest.json';
+const thingsToZip         = ['assets/icon16.png', 'assets/icon48.png', 'assets/icon128.png',
+                             'assets/favicon.png', 'assets/icon-no-bg.png',
+                             'better-github.js', manifest, 'popup.html', 'styles.css'];
+const package             = 'better-github.zip';
 
 function browserType() {
   const isChrome  = browser === validBrowsers[0] ? true : false;
@@ -100,7 +100,7 @@ function makeSureArgsAreValid() {
     throw new Error(`Invalid browser, "chrome" and "firefox" are only valid.`);
   }
 
-  if (!genOnlyManifest && args.length === maxArgs) {
+  if (shouldBuildPackage && args.length === maxArgs) {
     throw new Error(`Unexpected arguments. Check docs for more info.`);
   }
 }
@@ -111,7 +111,7 @@ function maybeDeleteManifest() {
   childProcess.execSync(command);
 }
 
-function refreshManifest() {
+function buildManifest() {
   maybeDeleteManifest();
 
   // Create new manifest.json and put `chromeManifestContent` if the build is
@@ -131,7 +131,7 @@ function maybeDeletePackage() {
   childProcess.execSync(command);
 }
 
-function generateNewPackage() {
+function buildPackage() {
   maybeDeletePackage();
 
   const command = `zip ${package} ${thingsToZip.join(' ')}`
@@ -143,10 +143,10 @@ function main() {
   const t0 = Date.now();
 
   makeSureArgsAreValid();
-  refreshManifest();
+  buildManifest();
 
-  if (!genOnlyManifest) {
-    generateNewPackage();
+  if (shouldBuildPackage) {
+    buildPackage();
   }
 
   const t1 = Date.now();
