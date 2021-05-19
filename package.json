@@ -12,7 +12,8 @@
     "chrome:package": "node script chrome",
     "firefox:package": "node script firefox",
     "chrome:manifest": "node script chrome -m",
-    "firefox:manifest": "node script firefox -m"
+    "firefox:manifest": "node script firefox -m",
+    "clean": "rm manifest.json better-github.zip"
   },
   "repository": {
     "type": "git",

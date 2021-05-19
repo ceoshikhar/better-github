@@ -143,11 +143,9 @@ function main() {
   const t0 = Date.now();
 
   makeSureArgsAreValid();
+  refreshManifest();
 
-  if (genOnlyManifest) {
-    refreshManifest();
-  } else {
-    refreshManifest();
+  if (!genOnlyManifest) {
     generateNewPackage();
   }
 
