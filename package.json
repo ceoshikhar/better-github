@@ -9,10 +9,10 @@
   "license": "MIT",
   "main": "better-github.js",
   "scripts": {
-    "chrome:package": "node build chrome",
-    "firefox:package": "node build firefox",
-    "chrome:manifest": "node build chrome -m",
-    "firefox:manifest": "node build firefox -m",
+    "chrome:package": "node scripts/build chrome",
+    "firefox:package": "node scripts/build firefox",
+    "chrome:manifest": "node scripts/build chrome -m",
+    "firefox:manifest": "node scripts/build firefox -m",
     "clean": "rm manifest.json better-github.zip"
   },
   "repository": {

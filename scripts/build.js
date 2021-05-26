@@ -12,15 +12,15 @@
  * Don't know what you need to do for it to work on `windows`. I use WSL.
  *
  * USAGE :
- * - node script <browser> [options] OR you can run scripts from `package.json`
+ * - node build <browser> [options] OR you can run scripts from `package.json`
  *
  * Valid values for `<browser>` are : "chrome" and "firefox"
  * Valid options :
  * 1. `-m` : To generate only the manifest.json and not generate package.zip
  *
  * EXAMPLE :
- * 1. Generate better-github.zip for chrome : `node script chrome`
- * 2. Generate manifest.json for firefox : `node script firefox -m`
+ * 1. Generate better-github.zip for chrome : `node build chrome`
+ * 2. Generate manifest.json for firefox : `node build firefox -m`
  */
 
 const fs = require("fs");
@@ -33,6 +33,10 @@ function green(text) {
 
 function red(text) {
   return chalk.red.underline(text);
+}
+
+function result(text) {
+  return chalk.black.bgYellowBright(text);
 }
 
 // NOTE: Update the `version` here and in `package.json` whenever a new release
@@ -83,7 +87,7 @@ const manifest            = 'manifest.json';
 const thingsToZip         = ['assets/icon16.png', 'assets/icon48.png', 'assets/icon128.png',
                              'assets/favicon.png', 'assets/icon-no-bg.png',
                              'better-github.js', manifest, 'popup.html', 'styles.css'];
-const package             = 'better-github.zip';
+const packageName         = 'better-github.zip';
 
 function browserType() {
   const isChrome  = browser === validBrowsers[0] ? true : false;
@@ -93,15 +97,15 @@ function browserType() {
 
 function makeSureArgsAreValid() {
   if (args.length > maxArgs) {
-    throw new Error(`Maximum 2 arguments are allowed. Check docs for more info.`);
+    throw new Error(`Maximum 2 arguments are allowed`);
   }
 
   if (!validBrowsers.includes(browser)) {
-    throw new Error(`Invalid browser, "chrome" and "firefox" are only valid.`);
+    throw new Error(`Invalid browser, "chrome" and "firefox" are only valid`);
   }
 
   if (shouldBuildPackage && args.length === maxArgs) {
-    throw new Error(`Unexpected arguments. Check docs for more info.`);
+    throw new Error(`Unexpected arguments`);
   }
 }
 
@@ -126,16 +130,16 @@ function buildManifest() {
 }
 
 function maybeDeletePackage() {
-  const command = `rm -rf ${package}`;
-  console.log(green(`Deleting `) + red(`old ${package} `) + green(`if exists`));
+  const command = `rm -rf ${packageName}`;
+  console.log(green(`Deleting `) + red(`old ${packageName} `) + green(`if exists`));
   childProcess.execSync(command);
 }
 
 function buildPackage() {
   maybeDeletePackage();
 
-  const command = `zip ${package} ${thingsToZip.join(' ')}`
-  console.log(green(`Zipping the following files to `) + red(`${package} :`)  , command);
+  const command = `zip ${packageName} ${thingsToZip.join(' ')}`
+  console.log(green(`Zipping the following files to `) + red(`${packageName} :`)  , command);
   childProcess.execSync(command);
 }
 
@@ -151,7 +155,7 @@ function main() {
 
   const t1 = Date.now();
   const timeTaken = t1 - t0;
-  console.log(chalk.black.bgYellowBright(`Built in: ${timeTaken}ms`));
+  console.log(result(`Built in: ${timeTaken}ms`));
 }
 
 main();
