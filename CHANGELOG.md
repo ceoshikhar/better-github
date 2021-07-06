@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.0.2 (07-07-2021)
+
+### Fixes
+
+- Mouse cursor not falling in correct place while editing a file. [Issue #6](https://github.com/ceoshikhar/better-github/issues/6) - Fixed by [PR #10](https://github.com/ceoshikhar/better-github/pull/10).
+
+- Stopped working on github gists. [Issue #8](https://github.com/ceoshikhar/better-github/issues/8) - Fixed by [PR #9](https://github.com/ceoshikhar/better-github/pull/9). Thanks to [Aahnik Daw](https://github.com/aahnik).
+
 # 1.0.1 (01-04-2021)
 
 ### Features
