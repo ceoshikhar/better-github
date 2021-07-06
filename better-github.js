@@ -21,6 +21,8 @@ function init() {
 
 // Apply the currently set font styles if they exist
 async function applyCurrentSetStyles() {
+  if (isUserEditingFile()) return; 
+
   const currentSetFontStyles = await getCurrentSetFontStyles();
   if (!currentSetFontStyles) return;
 
@@ -246,4 +248,39 @@ async function getCurrentSetFontStyles() {
   cache.fontSize = currentSetFontSize;
 
   return genFontStyles(currentSetFontName, currentSetFontSize);
+}
+
+// This is a cheeky solution to the issue where the code editor goes whack
+// mode when we change the font styles on the code lines inside the editor.
+//
+// So for the time being we will not change the font styles when a user is
+// editing a file on GitHub.
+//
+// Maybe in the future, if I get lucky( idk wtf is GitHub doing ) or someone 
+// in the world contributes and solves this issue where we can apply custom 
+// font styles to editor font without making it go insane, that would be nice.
+//
+// Untill then, Better GitHub won't do it's magic when user edits a file on
+// GitHub. Also, who does that? xD
+// Check - https://github.com/ceoshikhar/better-github/issues/6 for more info.
+function isUserEditingFile() {
+  function fileNameFromPath() {
+    const words     = window.location.pathname.split("/");
+    const len       = words.length;
+    // The file being viewed/edited on GitHub is the last word in the URL path.
+    const fileName  = words[len - 1];
+
+    return fileName;
+  }
+
+  // The word "edit" exists in the URL path if the user is editing the file.
+  const wordEditInPathExists = window.location.pathname.includes("edit");
+  const fileNameFromInputEl = document.querySelector('input[name=filename]')?.value;
+
+  // The name of the file being edited will be same in URL path and input element on page load.
+  if ((fileNameFromPath() === fileNameFromInputEl) && wordEditInPathExists) {
+    return true;
+  }
+
+  return false;
 }
