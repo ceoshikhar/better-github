@@ -8,7 +8,7 @@
     <span> · </span>
     <a href="https://chrome.google.com/webstore/detail/better-github/ammeaejgjdeifjekkofhnliedhccbmgp">Chrome</a>
     <span> · </span>
-    <a href="#donate">Donate</a>
+    <a href="#sponsor">Sponsor</a>
   </h3>
 </div>
 
@@ -54,7 +54,7 @@ Couldn't find anything existing to help me solve my problem, so I created this s
 
 I called it `Better GitHub` inspired by `Better Twitch TV` and `Better Discord`.
 
-# Donate
+# Sponsor
 
 > I have already applied for [GitHub Sponsors](https://github.com/sponsors) and I am on the waitlist. Till then you can support the project via the methods listed below.
 
