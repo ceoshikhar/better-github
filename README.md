@@ -7,8 +7,6 @@
     <a href="https://addons.mozilla.org/en-US/firefox/addon/bettergithub/">Firefox</a>
     <span> · </span>
     <a href="https://chrome.google.com/webstore/detail/better-github/ammeaejgjdeifjekkofhnliedhccbmgp">Chrome</a>
-    <span> · </span>
-    <a href="#sponsor">Sponsor</a>
   </h3>
 </div>
 
@@ -53,12 +51,6 @@ Default font size of code text was very small which gave me had a hard time read
 Couldn't find anything existing to help me solve my problem, so I created this simple yet powerful extension for Chrome browser. If something does exist though, let me know, alright?
 
 I called it `Better GitHub` inspired by `Better Twitch TV` and `Better Discord`.
-
-# Sponsor
-
-> I have already applied for [GitHub Sponsors](https://github.com/sponsors) and I am on the waitlist. Till then you can support the project via the methods listed below.
-
-### [Paypal](https://paypal.me/itsShikhar)
 
 # Todos
 
