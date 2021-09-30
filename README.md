@@ -1,7 +1,7 @@
 ![readme banner](./assets/banner.png)
 
 <div align="center">
-  <h1>better-github</h1>
+  <h1>Better GitHub</h1>
   <p><strong>🎨 Enhance your code reading experience on GitHub</strong></p>
   <h3 align="center">
     <a href="https://addons.mozilla.org/en-US/firefox/addon/bettergithub/">Firefox</a>
