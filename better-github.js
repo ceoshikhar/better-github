@@ -4,7 +4,8 @@
 // read calls every time `applyCurrentSetStyles` is called.
 const cache = {
   fontName: null,
-  fontSize: null
+  fontSize: null,
+  lineHeight: null
 };
 
 // Do the magic once the DOM is completely loaded.
@@ -26,8 +27,8 @@ async function applyCurrentSetStyles() {
   const currentSetFontStyles = await getCurrentSetFontStyles();
   if (!currentSetFontStyles) return;
 
-  const { fontFamily, fontSize } = currentSetFontStyles;
-  applyStyles(fontFamily, fontSize);
+  const { fontFamily, fontSize, lineHeight } = currentSetFontStyles;
+  applyStyles(fontFamily, fontSize, lineHeight);
 }
 
 // Apply the custom styles whenever something on the DOM changes. Following are
@@ -60,6 +61,7 @@ function resetStyles() {
   // important otherwise it would defeat the whole purpose of `Better Github`.
   const githubDefaultFontFamily = "SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace";
   const githubDefaultFontSize   = "12px";
+  const githubDefaultLineHeight = 1;
 
   // Clear the storage so that when we reload/refresh or visit GitHub in another
   // tab, we don't apply any custom styles including the above two mentioned.
@@ -67,7 +69,7 @@ function resetStyles() {
   clearStorage();
   // Although we do apply the GitHub's "default styles" so that we don't have to
   // manually refresh the current open tabs and this makes it feel "reactive".
-  applyStyles(githubDefaultFontFamily, githubDefaultFontSize);
+  applyStyles(githubDefaultFontFamily, githubDefaultFontSize, githubDefaultLineHeight);
 }
 
 // This is where the magic happens. As the name suggests, the function is
@@ -78,7 +80,7 @@ function resetStyles() {
 // - All the text inside a file while viewing( reading ) it.
 // - Code in README files that are inside "`<code>`" blocks also known as `<pre>` tags.
 // - Code in pull request diffs.
-function applyStyles(fontFamily, fontSize) {
+function applyStyles(fontFamily, fontSize, lineHeight) {
   const codeTextElements        = document.getElementsByClassName("blob-code-inner");
   const codeLineNumElements     = document.getElementsByClassName("blob-num");
   const preElements             = document.querySelectorAll("pre");
@@ -86,39 +88,47 @@ function applyStyles(fontFamily, fontSize) {
   for (let i = 0; i < codeTextElements.length; i++) {
     codeTextElements[i].style.fontFamily  = fontFamily;
     codeTextElements[i].style.fontSize    = fontSize;
+    codeTextElements[i].style.lineHeight  = lineHeight;
   }
 
   for (let i = 0; i < codeLineNumElements.length; i++) {
     codeLineNumElements[i].style.fontFamily = fontFamily;
     codeLineNumElements[i].style.fontSize   = fontSize;
+    codeLineNumElements[i].style.lineHeight = lineHeight;
   }
 
   for (let i = 0; i < preElements.length; i++ ){
     preElements[i].style.fontFamily = fontFamily;
     preElements[i].style.fontSize   = fontSize;
+    preElements[i].style.lineHeight = lineHeight;
   }
 }
 
 // Extension's browser action popup UI handling to allow user to customize the
 // settings of the styles. Handles the `APPLY` and `RESET` button logic.
 document.addEventListener('DOMContentLoaded', async function() {
-  const setFontName   = await getCurrentSetFontName() || "";
-  const setFontSize   = await getCurrentSetFontSize() || "";
-  const applyButton   = document.getElementById("apply-button");
-  const resetButton   = document.getElementById("reset-button");
-  const fontNameInput = document.getElementById("font-name-input");
-  const fontSizeInput = document.getElementById("font-size-input");
+  const setFontName     = await getCurrentSetFontName() || "";
+  const setFontSize     = await getCurrentSetFontSize() || "";
+  const setLineHeight   = await getCurrentSetLineHeight() || "";
+  const applyButton     = document.getElementById("apply-button");
+  const resetButton     = document.getElementById("reset-button");
+  const fontNameInput   = document.getElementById("font-name-input");
+  const fontSizeInput   = document.getElementById("font-size-input");
+  const lineHeightInput = document.getElementById("line-height-input");
 
   // Set the initial value of the inputs to be the current set styles.
-  fontNameInput.value = setFontName;
-  fontSizeInput.value = setFontSize;
+  fontNameInput.value   = setFontName;
+  fontSizeInput.value   = setFontSize;
+  lineHeightInput.value = setLineHeight;
 
   applyButton.addEventListener("click", function() {
     const font = fontNameInput.value;
     const size = fontSizeInput.value;
+    const height = lineHeightInput.value;
     const fontStyles = {
       font,
-      size: parseInt(size)
+      size: parseInt(size),
+      height: parseFloat(height)
     }
 
     // We get the details of all the tabs open and send message to all the
@@ -150,7 +160,7 @@ chrome.runtime.onMessage.addListener(function(request, _sender, sendResponse) {
   const data = request.data || {};
 
   const shouldReset = data.reset === true;
-  const doNothing = !data.font || !data.size;
+  const doNothing = !data.font || !data.size || !data.height;
 
   if (shouldReset) {
     resetStyles();
@@ -164,14 +174,16 @@ chrome.runtime.onMessage.addListener(function(request, _sender, sendResponse) {
     return;
   }
 
-  const name = data.font;
-  const size = data.size;
+  const name    = data.font;
+  const size    = data.size;
+  const height  = data.height;
 
   setCurrentSetFontName(name);
   setCurrentSetFontSize(size);
+  setCurrentSetLineHeight(height);
 
-  const { fontFamily, fontSize } = genFontStyles(name, size);
-  applyStyles(fontFamily, fontSize);
+  const { fontFamily, fontSize, lineHeight } = genFontStyles(name, size, height);
+  applyStyles(fontFamily, fontSize, lineHeight);
   sendResponse({ data, success: true });
 });
 
@@ -209,6 +221,11 @@ async function getCurrentSetFontSize() {
   return currentFontSize;
 }
 
+async function getCurrentSetLineHeight() {
+  const currentLineHeight = await getFromStorage("lineHeight");
+  return currentLineHeight;
+}
+
 function setCurrentSetFontName(name) {
   saveToStorage({ fontName: name });
   cache.fontName = name;
@@ -219,35 +236,43 @@ function setCurrentSetFontSize(size) {
   cache.fontSize = size;
 }
 
+function setCurrentSetLineHeight(height) {
+  saveToStorage({lineHeight: height});
+  cache.lineHeight = height;
+}
+
 // Generates correct styles by adding `px` for `size` and  adding
 // `'monospace'` for `name`.
-function genFontStyles(name, size) {
+function genFontStyles(name, size, height) {
   const fontFamily  = `${name}, 'monospace'`;
   const fontSize    = `${size}px`;
+  const lineHeight  = height;
 
-  return { fontFamily, fontSize };
+  return { fontFamily, fontSize, lineHeight };
 }
 
 async function getCurrentSetFontStyles() {
-  if (cache.fontName && cache.fontSize) {
-    return genFontStyles(cache.fontName, cache.fontSize);
+  if (cache.fontName && cache.fontSize && cache.lineHeight) {
+    return genFontStyles(cache.fontName, cache.fontSize, cache.lineHeight);
   };
 
   // Everything below here will be executed only during the first time the
   // document is loaded. After that, `cache` will always have latest font styles.
 
-  const currentSetFontName = await getCurrentSetFontName();
-  const currentSetFontSize = await getCurrentSetFontSize();
+  const currentSetFontName    = await getCurrentSetFontName();
+  const currentSetFontSize    = await getCurrentSetFontSize();
+  const currentSetLineHeight  = await getCurrentSetLineHeight();
 
-  if (!currentSetFontName || !currentSetFontSize) {
+  if (!currentSetFontName || !currentSetFontSize || !currentSetLineHeight) {
     return;
   }
 
   // Update the cache so that we don't make the chrome storage read calls again.
-  cache.fontName = currentSetFontName;
-  cache.fontSize = currentSetFontSize;
+  cache.fontName    = currentSetFontName;
+  cache.fontSize    = currentSetFontSize;
+  cache.lineHeight  = currentSetLineHeight;
 
-  return genFontStyles(currentSetFontName, currentSetFontSize);
+  return genFontStyles(currentSetFontName, currentSetFontSize, currentSetLineHeight);
 }
 
 // This is a cheeky solution to the issue where the code editor goes whack
