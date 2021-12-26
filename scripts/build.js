@@ -44,7 +44,7 @@ function result(text) {
 const chromeManifestContent = {
     manifest_version: 2,
     name: 'Better Github',
-    version: '1.0.2',
+    version: '1.0.3',
     description: 'Enhance your code reading experience on GitHub',
     content_scripts: [
         {
