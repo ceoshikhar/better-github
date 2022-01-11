@@ -95,7 +95,11 @@ const thingsToZip = [
     'popup.html',
     'styles.css',
 ];
-const packageName = 'better-github.zip';
+const packageChromeName = "better-github-chrome.zip";
+const packageFirefoxName = "better-github-firefox.zip";
+const packageName = browserType().isChrome
+    ? packageChromeName
+    : packageFirefoxName;
 
 function browserType() {
     const isChrome = browser === validBrowsers[0] ? true : false;
