@@ -23,6 +23,10 @@
  * 2. Generate manifest.json for firefox : `node build firefox -m`
  */
 
+// NOTE: Update the `version` here and in `package.json` whenever a new release
+// of the extension is published.
+const VERSION = "1.0.3";
+
 const fs = require("fs");
 const childProcess = require("child_process");
 const chalk = require("chalk");
@@ -39,12 +43,10 @@ function result(text) {
     return chalk.black.bgYellowBright(text);
 }
 
-// NOTE: Update the `version` here and in `package.json` whenever a new release
-// of the extension is published.
 const chromeManifestContent = {
     manifest_version: 2,
     name: "Better Github",
-    version: "1.0.3",
+    version: VERSION,
     description: "Enhance your code reading experience on GitHub",
     content_scripts: [
         {
