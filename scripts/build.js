@@ -23,9 +23,9 @@
  * 2. Generate manifest.json for firefox : `node build firefox -m`
  */
 
-const fs = require('fs');
-const childProcess = require('child_process');
-const chalk = require('chalk');
+const fs = require("fs");
+const childProcess = require("child_process");
+const chalk = require("chalk");
 
 function green(text) {
     return chalk.green(text);
@@ -43,25 +43,25 @@ function result(text) {
 // of the extension is published.
 const chromeManifestContent = {
     manifest_version: 2,
-    name: 'Better Github',
-    version: '1.0.3',
-    description: 'Enhance your code reading experience on GitHub',
+    name: "Better Github",
+    version: "1.0.3",
+    description: "Enhance your code reading experience on GitHub",
     content_scripts: [
         {
-            js: ['better-github.js'],
-            matches: ['https://github.com/*', 'https://gist.github.com/*'],
+            js: ["better-github.js"],
+            matches: ["https://github.com/*", "https://gist.github.com/*"],
         },
     ],
-    permissions: ['storage'],
+    permissions: ["storage"],
     browser_action: {
-        default_title: 'Better Github',
-        default_icon: './assets/favicon.png',
-        default_popup: 'popup.html',
+        default_title: "Better Github",
+        default_icon: "./assets/favicon.png",
+        default_popup: "popup.html",
     },
     icons: {
-        16: './assets/icon16.png',
-        48: './assets/icon48.png',
-        128: './assets/icon128.png',
+        16: "./assets/icon16.png",
+        48: "./assets/icon48.png",
+        128: "./assets/icon128.png",
     },
 };
 
@@ -70,8 +70,8 @@ const firefoxManifestContent = {
     ...chromeManifestContent,
     applications: {
         gecko: {
-            id: 'better-github@ceoshikhar.com',
-            strict_min_version: '80.0',
+            id: "better-github@ceoshikhar.com",
+            strict_min_version: "80.0",
         },
     },
 };
@@ -81,19 +81,19 @@ const firefoxManifestContent = {
 const args = process.argv.slice(2);
 const maxArgs = 2;
 const browser = args[0];
-const validBrowsers = ['chrome', 'firefox'];
-const shouldBuildPackage = browser && args[1] === '-m' ? false : true;
-const manifest = 'manifest.json';
+const validBrowsers = ["chrome", "firefox"];
+const shouldBuildPackage = browser && args[1] === "-m" ? false : true;
+const manifest = "manifest.json";
 const thingsToZip = [
-    'assets/icon16.png',
-    'assets/icon48.png',
-    'assets/icon128.png',
-    'assets/favicon.png',
-    'assets/icon-no-bg.png',
-    'better-github.js',
+    "assets/icon16.png",
+    "assets/icon48.png",
+    "assets/icon128.png",
+    "assets/favicon.png",
+    "assets/icon-no-bg.png",
+    "better-github.js",
     manifest,
-    'popup.html',
-    'styles.css',
+    "popup.html",
+    "styles.css",
 ];
 const packageChromeName = "better-github-chrome.zip";
 const packageFirefoxName = "better-github-firefox.zip";
@@ -166,7 +166,7 @@ function maybeDeletePackage() {
 function buildPackage() {
     maybeDeletePackage();
 
-    const command = `zip ${packageName} ${thingsToZip.join(' ')}`;
+    const command = `zip ${packageName} ${thingsToZip.join(" ")}`;
     console.log(
         green(`Zipping the following files to `) + red(`${packageName} :`),
         command
