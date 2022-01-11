@@ -9,11 +9,11 @@
     "license": "MIT",
     "main": "better-github.js",
     "scripts": {
-        "chrome:package": "node scripts/build chrome",
-        "firefox:package": "node scripts/build firefox",
-        "chrome:manifest": "node scripts/build chrome -m",
-        "firefox:manifest": "node scripts/build firefox -m",
-        "clean": "rm manifest.json better-github.zip"
+        "package:chrome": "node scripts/build chrome",
+        "package:firefox": "node scripts/build firefox",
+        "manifest:chrome": "node scripts/build chrome -m",
+        "manifest:firefox": "node scripts/build firefox -m",
+        "clean": "rm -f manifest.json better-github-chrome.zip better-github-firefox.zip"
     },
     "repository": {
         "type": "git",
