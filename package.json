@@ -13,7 +13,7 @@
         "package:firefox": "node scripts/build firefox",
         "manifest:chrome": "node scripts/build chrome -m",
         "manifest:firefox": "node scripts/build firefox -m",
-        "clean": "rm -f manifest.json better-github-chrome.zip better-github-firefox.zip"
+        "clean": "rm -f manifest-firefox.json manifest-chrome.json better-github-chrome.zip better-github-firefox.zip"
     },
     "repository": {
         "type": "git",
