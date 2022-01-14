@@ -85,18 +85,12 @@ const maxArgs = 2;
 const browser = args[0];
 const validBrowsers = ["chrome", "firefox"];
 const shouldBuildPackage = browser && args[1] === "-m" ? false : true;
-
+const manifestName = "manifest.json";
 const packageChromeName = "better-github-chrome.zip";
 const packageFirefoxName = "better-github-firefox.zip";
 const packageName = browserType().isChrome
     ? packageChromeName
     : packageFirefoxName;
-
-const manifestChromeName = "manifest-chrome.json";
-const manifestFirefoxName = "manifest-firefox.json";
-const manifestName = browserType().isChrome
-    ? manifestChromeName
-    : manifestFirefoxName
 
 const thingsToZip = [
     "assets/icon16.png",
@@ -109,7 +103,6 @@ const thingsToZip = [
     "popup.html",
     "styles.css",
 ];
-
 
 function browserType() {
     const isChrome = browser === validBrowsers[0] ? true : false;
@@ -136,7 +129,7 @@ function makeSureArgsAreValid() {
 function cleanUpOldFiles() {
     console.log(green("> Cleaning up old files if they exist"));
 
-    const command = `rm -f manifest-firefox.json manifest-chrome.json better-github-chrome.zip better-github-firefox.zip`;
+    const command = `rm -f manifest.json better-github-chrome.zip better-github-firefox.zip`;
     childProcess.execSync(command);
 }
 
@@ -145,8 +138,7 @@ function cleanUpOldFiles() {
 // for Firefox browser.
 function buildManifest() {
     console.log(
-        green(`> Building manifest for ${browser}: `) +
-        blue(`${manifestName}`) 
+        green(`> Building manifest for ${browser}: `) + blue(`${manifestName}`)
     );
     if (browserType().isChrome) {
         fs.writeFileSync(
@@ -164,8 +156,7 @@ function buildManifest() {
 function buildPackage() {
     const command = `zip ${packageName} ${thingsToZip.join(" ")}`;
     console.log(
-        green(`> Building package for ${browser}: `) + 
-        blue(`${packageName}`)
+        green(`> Building package for ${browser}: `) + blue(`${packageName}`)
     );
     childProcess.execSync(command);
 }
