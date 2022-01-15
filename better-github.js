@@ -3,10 +3,19 @@
 // This improves the performance as we don't do the async chrome storage API
 // read calls every time `applyCurrentSetStyles` is called.
 const cache = {
+    dirty: false,
     fontName: null,
     fontSize: null,
     lineHeight: null,
 };
+
+// These styles were taken from Google Chrome's(Windows) inspect element tool
+// on 24/3/2021. These default styles might change but it's not really that
+// important otherwise it would defeat the whole purpose of `Better Github`.
+const DEFAULT_FONT_FAMILY =
+    "SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace";
+const DEFAULT_FONT_SIZE = "12px";
+const DEFAULT_LINE_HEIGHT = 1.4;
 
 // Do the magic once the DOM is completely loaded.
 window.onload = init();
@@ -56,25 +65,14 @@ function reApplyStylesOnDOMChange() {
 
 // Reset the font styles to Github's default.
 function resetStyles() {
-    // These styles were taken from Google Chrome's(Windows) inspect element tool
-    // on 24/3/2021. These default styles might change but it's not really that
-    // important otherwise it would defeat the whole purpose of `Better Github`.
-    const githubDefaultFontFamily =
-        "SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace";
-    const githubDefaultFontSize = "12px";
-    const githubDefaultLineHeight = 1;
-
     // Clear the storage so that when we reload/refresh or visit GitHub in another
     // tab, we don't apply any custom styles including the above two mentioned.
     // The real(coming from GitHub) GitHub's default styles are used.
     clearStorage();
-    // Although we do apply the GitHub's "default styles" so that we don't have to
-    // manually refresh the current open tabs and this makes it feel "reactive".
-    applyStyles(
-        githubDefaultFontFamily,
-        githubDefaultFontSize,
-        githubDefaultLineHeight
-    );
+
+    // We apply the GitHub's "default styles" so that we don't have to manually
+    // refresh the current open tabs and this makes it feel "reactive".
+    applyStyles(DEFAULT_FONT_FAMILY, DEFAULT_FONT_SIZE, DEFAULT_LINE_HEIGHT);
 }
 
 // This is where the magic happens. As the name suggests, the function is
@@ -148,8 +146,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         const height = lineHeightInput.value;
         const fontStyles = {
             font,
-            size: parseInt(size),
-            height: parseFloat(height),
+            size,
+            height,
         };
 
         // We get the details of all the tabs open and send message to all the
@@ -180,17 +178,9 @@ document.addEventListener("DOMContentLoaded", async function () {
 chrome.runtime.onMessage.addListener(function (request, _sender, sendResponse) {
     const data = request.data || {};
     const shouldReset = data.reset === true;
-    const doNothing = !data.font || !data.size || !data.height;
 
     if (shouldReset) {
         resetStyles();
-    }
-
-    // TODO: Right now we ignore if any 1 of the fields are empty but soon we need
-    // to allow user to provide either one of the properties (font name or font
-    // size) and we should apply just that style instead of making both of the
-    // properties required. So that user can change only one property (name or size).
-    if (doNothing) {
         return;
     }
 
@@ -212,7 +202,6 @@ chrome.runtime.onMessage.addListener(function (request, _sender, sendResponse) {
 });
 
 // Chrome's storage API allows us to store & fetch user's recent applied styles.
-
 // Save to chrome's storage. `data` should be an object like `{ key: value }`.
 function saveToStorage(data) {
     chrome.storage.sync.set(data);
@@ -268,15 +257,15 @@ function setCurrentSetLineHeight(height) {
 // Generates correct styles by adding `px` for `size` and  adding
 // `'monospace'` for `name`.
 function genFontStyles(name, size, height) {
-    const fontFamily = `${name}, 'monospace'`;
-    const fontSize = `${size}px`;
-    const lineHeight = height;
+    const fontFamily = !name ? DEFAULT_FONT_FAMILY : `${name}, 'monospace'`;
+    const fontSize = !size ? DEFAULT_FONT_SIZE : `${size}px`;
+    const lineHeight = !height ? DEFAULT_LINE_HEIGHT : height;
 
     return { fontFamily, fontSize, lineHeight };
 }
 
 async function getCurrentSetFontStyles() {
-    if (cache.fontName && cache.fontSize && cache.lineHeight) {
+    if (cache.dirty) {
         return genFontStyles(cache.fontName, cache.fontSize, cache.lineHeight);
     }
 
@@ -287,20 +276,13 @@ async function getCurrentSetFontStyles() {
     const currentSetFontSize = await getCurrentSetFontSize();
     const currentSetLineHeight = await getCurrentSetLineHeight();
 
-    if (!currentSetFontName || !currentSetFontSize || !currentSetLineHeight) {
-        return;
-    }
-
     // Update the cache so that we don't make the chrome storage read calls again.
-    cache.fontName = currentSetFontName;
-    cache.fontSize = currentSetFontSize;
-    cache.lineHeight = currentSetLineHeight;
+    cache.dirty = true;
+    if (currentSetFontName) cache.fontName = currentSetFontName;
+    if (currentSetFontSize) cache.fontSize = currentSetFontSize;
+    if (currentSetLineHeight) cache.lineHeight = currentSetLineHeight;
 
-    return genFontStyles(
-        currentSetFontName,
-        currentSetFontSize,
-        currentSetLineHeight
-    );
+    return getCurrentSetFontStyles();
 }
 
 // This is a cheeky solution to the issue where the code editor goes whack
