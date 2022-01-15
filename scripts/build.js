@@ -25,7 +25,7 @@
 
 // NOTE: Update the `version` here and in `package.json` whenever a new release
 // of the extension is published.
-const VERSION = "1.0.3";
+const VERSION = "1.1.0";
 
 const fs = require("fs");
 const childProcess = require("child_process");
