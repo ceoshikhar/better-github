@@ -60,8 +60,8 @@ function resetStyles() {
     // on 24/3/2021. These default styles might change but it's not really that
     // important otherwise it would defeat the whole purpose of `Better Github`.
     const githubDefaultFontFamily =
-        'SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace';
-    const githubDefaultFontSize = '12px';
+        "SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace";
+    const githubDefaultFontSize = "12px";
     const githubDefaultLineHeight = 1;
 
     // Clear the storage so that when we reload/refresh or visit GitHub in another
@@ -86,47 +86,63 @@ function resetStyles() {
 // - Code in README files that are inside "`<code>`" blocks also known as `<pre>` tags.
 // - Code in pull request diffs.
 function applyStyles(fontFamily, fontSize, lineHeight) {
-    const codeTextElements = document.getElementsByClassName('blob-code-inner');
-    const codeLineNumElements = document.getElementsByClassName('blob-num');
-    const preElements = document.querySelectorAll('pre');
+    const codeTextElements = document.getElementsByClassName("blob-code-inner");
+    const codeLineNumElements = document.getElementsByClassName("blob-num");
+    const preElements = document.querySelectorAll("pre");
 
     for (let i = 0; i < codeTextElements.length; i++) {
-        codeTextElements[i].style.fontFamily = fontFamily;
-        codeTextElements[i].style.fontSize = fontSize;
-        codeTextElements[i].style.lineHeight = lineHeight;
+        applyStyle(codeTextElements[i], "fontFamily", fontFamily);
+        applyStyle(codeTextElements[i], "fontSize", fontSize);
+        applyStyle(codeTextElements[i], "lineHeight", lineHeight);
     }
 
     for (let i = 0; i < codeLineNumElements.length; i++) {
-        codeLineNumElements[i].style.fontFamily = fontFamily;
-        codeLineNumElements[i].style.fontSize = fontSize;
-        codeLineNumElements[i].style.lineHeight = lineHeight;
+        applyStyle(codeLineNumElements[i], "fontFamily", fontFamily);
+        applyStyle(codeLineNumElements[i], "fontSize", fontSize);
+        applyStyle(codeLineNumElements[i], "fontHeight", lineHeight);
     }
 
     for (let i = 0; i < preElements.length; i++) {
-        preElements[i].style.fontFamily = fontFamily;
-        preElements[i].style.fontSize = fontSize;
-        preElements[i].style.lineHeight = lineHeight;
+        applyStyle(preElements[i], "fontFamily", fontFamily);
+        applyStyle(preElements[i], "fontSize", fontSize);
+        applyStyle(preElements[i], "fontHeight", lineHeight);
     }
+}
+
+/**
+ * @param {HTMLElement} el The element to apply the style to.
+ * @param {string} prop The style property to change.
+ * @param {string} value The value to apply for the given `prop`.
+ *
+ * If a falsy(inc. empty string) value is passed as `value` then that value
+ * will not be applied and will be skipped.
+ */
+function applyStyle(el, prop, value) {
+    if (!value) {
+        return;
+    }
+
+    el.style[prop] = value;
 }
 
 // Extension's browser action popup UI handling to allow user to customize the
 // settings of the styles. Handles the `APPLY` and `RESET` button logic.
-document.addEventListener('DOMContentLoaded', async function () {
-    const setFontName = (await getCurrentSetFontName()) || '';
-    const setFontSize = (await getCurrentSetFontSize()) || '';
-    const setLineHeight = (await getCurrentSetLineHeight()) || '';
-    const applyButton = document.getElementById('apply-button');
-    const resetButton = document.getElementById('reset-button');
-    const fontNameInput = document.getElementById('font-name-input');
-    const fontSizeInput = document.getElementById('font-size-input');
-    const lineHeightInput = document.getElementById('line-height-input');
+document.addEventListener("DOMContentLoaded", async function () {
+    const setFontName = (await getCurrentSetFontName()) || "";
+    const setFontSize = (await getCurrentSetFontSize()) || "";
+    const setLineHeight = (await getCurrentSetLineHeight()) || "";
+    const applyButton = document.getElementById("apply-button");
+    const resetButton = document.getElementById("reset-button");
+    const fontNameInput = document.getElementById("font-name-input");
+    const fontSizeInput = document.getElementById("font-size-input");
+    const lineHeightInput = document.getElementById("line-height-input");
 
     // Set the initial value of the inputs to be the current set styles.
     fontNameInput.value = setFontName;
     fontSizeInput.value = setFontSize;
     lineHeightInput.value = setLineHeight;
 
-    applyButton.addEventListener('click', function () {
+    applyButton.addEventListener("click", function () {
         const font = fontNameInput.value;
         const size = fontSizeInput.value;
         const height = lineHeightInput.value;
@@ -146,7 +162,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         });
     });
 
-    resetButton.addEventListener('click', function () {
+    resetButton.addEventListener("click", function () {
         // Send message to all the tabs with data saying that we should reset the
         // styles. All the tabs with GitHub open will read this message and reset
         // styles to GitHub's default styles.
@@ -220,17 +236,17 @@ function clearStorage() {
 }
 
 async function getCurrentSetFontName() {
-    const currentFontName = await getFromStorage('fontName');
+    const currentFontName = await getFromStorage("fontName");
     return currentFontName;
 }
 
 async function getCurrentSetFontSize() {
-    const currentFontSize = await getFromStorage('fontSize');
+    const currentFontSize = await getFromStorage("fontSize");
     return currentFontSize;
 }
 
 async function getCurrentSetLineHeight() {
-    const currentLineHeight = await getFromStorage('lineHeight');
+    const currentLineHeight = await getFromStorage("lineHeight");
     return currentLineHeight;
 }
 
@@ -302,7 +318,7 @@ async function getCurrentSetFontStyles() {
 // Check - https://github.com/ceoshikhar/better-github/issues/6 for more info.
 function isUserEditingFile() {
     function fileNameFromPath() {
-        const words = window.location.pathname.split('/');
+        const words = window.location.pathname.split("/");
         const len = words.length;
         // The file being viewed/edited on GitHub is the last word in the URL path.
         const fileName = words[len - 1];
@@ -311,9 +327,9 @@ function isUserEditingFile() {
     }
 
     // The word "edit" exists in the URL path if the user is editing the file.
-    const wordEditInPathExists = window.location.pathname.includes('edit');
+    const wordEditInPathExists = window.location.pathname.includes("edit");
     const fileNameFromInputEl = document.querySelector(
-        'input[name=filename]'
+        "input[name=filename]"
     )?.value;
 
     // The name of the file being edited will be same in URL path and input element on page load.
