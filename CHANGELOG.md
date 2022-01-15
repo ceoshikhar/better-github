@@ -4,7 +4,7 @@
 
 ### Features
 
-- Can provide just one styel property and it will apply that style property instead of making the user provide values for all the style properties. [PR #12](https://github.com/ceoshikhar/better-github/pull/12).
+- Can provide just one style property and it will apply that style property instead of making the user provide values for all the style properties. [PR #12](https://github.com/ceoshikhar/better-github/pull/12).
 
 # 1.0.3 (26-12-2021)
 
