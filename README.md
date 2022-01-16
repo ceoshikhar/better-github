@@ -68,5 +68,5 @@ I called it `Better GitHub` inspired by `Better Twitch TV` and `Better Discord`.
 - [x] Firefox support as it was requested by [others](https://dev.to/ceoshikhar/enhance-your-code-reading-experience-on-github-with-this-chrome-extension-24ei).
 - [x] Publish it as an official Mozilla Firefox addon.
 - [x] Publish it as an official Chrome extension on Chrome Web Store.
-- [ ] Allow user to change only one property, either font name or font size instead of both properties being mandatory.
+- [x] Allow user to change only one property instead of all properties being mandatory.
 - [ ] Add `CONTRIBUTING.md` to help others so that they can contribute to the project.
