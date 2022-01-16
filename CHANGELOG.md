@@ -1,5 +1,11 @@
 # Changelog
 
+# 1.2.0 (16-01-2022)
+
+### Features
+
+- Apply styles to `code` HTML elements. [PR #13](https://github.com/ceoshikhar/better-github/pull/13).
+
 # 1.1.0 (16-01-2022)
 
 ### Features
