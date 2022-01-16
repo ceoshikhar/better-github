@@ -87,6 +87,7 @@ function applyStyles(fontFamily, fontSize, lineHeight) {
     const codeTextElements = document.getElementsByClassName("blob-code-inner");
     const codeLineNumElements = document.getElementsByClassName("blob-num");
     const preElements = document.querySelectorAll("pre");
+    const codeElements = document.querySelectorAll("code");
 
     for (let i = 0; i < codeTextElements.length; i++) {
         applyStyle(codeTextElements[i], "fontFamily", fontFamily);
@@ -104,6 +105,12 @@ function applyStyles(fontFamily, fontSize, lineHeight) {
         applyStyle(preElements[i], "fontFamily", fontFamily);
         applyStyle(preElements[i], "fontSize", fontSize);
         applyStyle(preElements[i], "fontHeight", lineHeight);
+    }
+
+    for (let i = 0; i < codeElements.length; i++) {
+        applyStyle(codeElements[i], "fontFamily", fontFamily);
+        applyStyle(codeElements[i], "fontSize", fontSize);
+        applyStyle(codeElements[i], "fontHeight", lineHeight);
     }
 }
 
