@@ -264,7 +264,7 @@ function setCurrentSetLineHeight(height) {
 // Generates correct styles by adding `px` for `size` and  adding
 // `'monospace'` for `name`.
 function genFontStyles(name, size, height) {
-    const fontFamily = !name ? DEFAULT_FONT_FAMILY : `${name}, 'monospace'`;
+    const fontFamily = !name ? DEFAULT_FONT_FAMILY : `'${name}', 'monospace'`;
     const fontSize = !size ? DEFAULT_FONT_SIZE : `${size}px`;
     const lineHeight = !height ? DEFAULT_LINE_HEIGHT : height;
 
