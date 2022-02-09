@@ -1,5 +1,12 @@
 # Changelog
 
+# Unversioned
+
+### Fixes
+
+- Some font names don't apply, for example 'Terminus (TTF) for Windows'. [PR #14](https://github.com/ceoshikhar/better-github/pull/14).
+
+
 # 1.2.0 (16-01-2022)
 
 ### Features
